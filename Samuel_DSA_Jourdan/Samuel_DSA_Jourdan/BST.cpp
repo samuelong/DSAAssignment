@@ -189,6 +189,6 @@ void BST::DisplayBT(BTNode* node)
 {
 	if (node != nullptr)
 	{
-		cout << SDASDASD
+		cout << =D
 	}
 }
