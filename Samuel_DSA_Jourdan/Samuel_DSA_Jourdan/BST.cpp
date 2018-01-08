@@ -2,6 +2,7 @@
 #include "BST.h"
 #include <minmax.h>
 #include <math.h>
+#include <iostream>
 
 BST::BST()
 {
@@ -177,4 +178,17 @@ BTNode* BST::RotateRightLeft(BTNode* node)
 	BTNode* nodeC = node->right;
 	node->right = RotateRight(nodeC);
 	return RotateLeft(node);
+}
+
+void BST::DisplayBT()
+{
+	DisplayBT(root);
+}
+
+void BST::DisplayBT(BTNode* node)
+{
+	if (node != nullptr)
+	{
+		cout <<
+	}
 }

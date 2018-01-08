@@ -15,31 +15,8 @@ class BST
 private:
 	BTNode* root;
 
-public:
-	//Default Constructors
-	BST();
-	~BST();
-	
-	//ADD IN MORE OPERATIONS IF REQUIRED. Reduce Coupling and Cohesion.
-	//FOR MAIN FUNCTIONALITIES
-
-	//Populate AVL BT by SUM of Nodes be larger or equal to Parameter at minimum
-	void PopulateAVLBT(int sum);
-	//Search for the BTNode based on item
-	BTNode Search(ItemType item);
-	//Adds a new BTNode into the BT
-	BTNode* Add(BTNode* node, ItemType item);
-	//Adds a new BTNode into the BT with AVL Tree
-	BTNode* AVLAdd(BTNode* node, ItemType item);
-	//Deletes the BTNode based on item
-	bool Delete(ItemType item);
-	//Display all items in Ascending order
-	void DisplayitemAsc();
 	//Returns the BTNode by Index
 	BTNode GetNode(int nodeIndex);
-
-	//FOR AVL TREE
-
 	//Get Node Height
 	int GetHeight(BTNode* node);
 	//Check if Root Node is balanced
@@ -58,4 +35,28 @@ public:
 	BTNode* RotateLeftRight(BTNode* node);
 	//RotateRight-Left
 	BTNode* RotateRightLeft(BTNode* node);
+
+public:
+	//Default Constructors
+	BST();
+	~BST();
+	
+	//ADD IN MORE OPERATIONS IF REQUIRED.
+	//FOR MAIN FUNCTIONALITIES
+
+	//Populate AVL BT by SUM of Nodes be larger or equal to Parameter at minimum
+	void PopulateAVLBT(int sum);
+	//Search for the BTNode based on item
+	BTNode Search(ItemType item);
+	//Adds a new BTNode into the BT
+	BTNode* Add(BTNode* node, ItemType item);
+	//Adds a new BTNode into the BT with AVL Tree
+	BTNode* AVLAdd(BTNode* node, ItemType item);
+	//Deletes the BTNode based on item
+	bool Delete(ItemType item);
+	//Display all items in Ascending order
+	void DisplayitemAsc();
+	//Display the Binary Tree
+	void DisplayBT();
+	void DisplayBT(BTNode* node);
 };
