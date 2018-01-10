@@ -39,13 +39,7 @@ private:
 	//RotateLeft-Right
 	BTNode* &RotateLeftRight(BTNode* node);
 	//RotateRight-Left
-	BTNode* &RotateRightLeft(BTNode* node);
-	//Get Items by Level By Level Traversal
-	Queue* GetLevelByLevel(BTNode* node);
-	//Display Spaces
-	void DisplaySpaces(int no);
-	//Count the number of Nodes
-	int CountNode(BTNode* node);
+	BTNode* RotateRightLeft(BTNode* node);
 
 public:
 
@@ -62,10 +56,14 @@ public:
 	void PopulateAVLBT(int sum);
 	//Search for the BTNode based on item
 	BTNode Search(ItemType item);
+	//Adds a new BTNode into the BT
+	BTNode* Add(BTNode* node, ItemType item);
+	//Adds a new BTNode into the BT with AVL Tree
+	BTNode* AVLAdd(BTNode* node, ItemType item);
 	//Deletes the BTNode based on item
 	bool Delete(ItemType item);
 	//Display all items in Ascending order
-	void DisplayitemAsc();
+	void DisplayItemAsc();
 	//Display the Binary Tree
 	void DisplayBT();
 	void DisplayBT(BTNode* node);
