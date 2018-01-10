@@ -192,3 +192,122 @@ void BST::DisplayBT(BTNode* node)
 
 	}
 }
+
+bool BST::Delete(ItemType item) 
+{
+	BTNode *currentNode = root;
+	BTNode *parentNode = NULL;
+	bool checkLeft = false;
+	bool found = false;
+
+	while (!found && currentNode != NULL)
+	{
+		if (item == currentNode->item) 
+		{
+			found = true;
+		}
+
+		else 
+		{
+			parentNode = currentNode;
+			if (item > currentNode->item) 
+			{
+				currentNode = currentNode->right;
+			}
+
+			else 
+			{
+				currentNode = currentNode->left;
+				checkLeft = true;
+			}
+		}
+	}
+
+	if (found) 
+	{
+		//if the deleted node has no children
+		if (currentNode->right == NULL && currentNode->left == NULL) 
+		{
+			//check to see if it's the root node being deleted
+			if (currentNode == root) 
+			{
+				delete currentNode;
+				return true;
+			}
+
+			//not root node and is a left child
+			else if (checkLeft) 
+			{
+				parentNode->left = NULL;
+				delete currentNode;
+				return true;
+			}
+
+			//not root node and is a right child
+			else 
+			{
+				parentNode->right = NULL;
+				delete currentNode;
+				return true;
+			}
+		}
+
+		else 
+		{
+			//deleted node has a left child
+			if (currentNode->right == NULL && currentNode->left != NULL) 
+			{
+				//is deleted node a left child?
+				if (checkLeft) 
+				{
+					parentNode->left = currentNode->left;
+					delete currentNode;
+					return true;
+				}
+
+				else 
+				{
+					parentNode->right = currentNode->left;
+					delete currentNode;
+					return true;
+				}
+			}
+
+			//deleted node has a right child
+			else if (currentNode->right != NULL && currentNode->left == NULL) 
+			{
+				if (checkLeft)
+				{
+					parentNode->left = currentNode->right;
+					delete currentNode;
+					return true;
+				}
+
+				else 
+				{
+					parentNode->right = currentNode->left;
+					delete currentNode;
+					return true;
+				}
+			}
+
+			//deleted node has two children
+			else 
+			{
+				//successor
+				//go all the way to the currentNode's left
+				BTNode* successorNode = currentNode->left;
+				while (successorNode->right != NULL) 
+				{
+					successorNode = successorNode->right;
+				}
+				//store the successor's value
+				int valueSuccessor = successorNode->item;
+				//remove the successor
+				delete successorNode;
+				//replace the value in the successorNode with the currentNode
+				currentNode->item = valueSuccessor;
+			}
+		}
+	}
+}

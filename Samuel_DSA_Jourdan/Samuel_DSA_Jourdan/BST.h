@@ -35,6 +35,8 @@ private:
 	BTNode* RotateLeftRight(BTNode* node);
 	//RotateRight-Left
 	BTNode* RotateRightLeft(BTNode* node);
+	//Deletes the node
+	bool Delete();
 
 public:
 	//Default Constructors
@@ -52,10 +54,12 @@ public:
 	BTNode* Add(BTNode* node, ItemType item);
 	//Adds a new BTNode into the BT with AVL Tree
 	BTNode* AVLAdd(BTNode* node, ItemType item);
+	//Deletes the node
+	bool Delete();
 	//Deletes the BTNode based on item
 	bool Delete(ItemType item);
 	//Display all items in Ascending order
-	void DisplayitemAsc();
+	void DisplayItemAsc();
 	//Display the Binary Tree
 	void DisplayBT();
 	void DisplayBT(BTNode* node);
