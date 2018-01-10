@@ -16,7 +16,7 @@ int main()
 	std::cin >> num;
 	//Create BST.
 	BST myBST = BST();
-	myBST.PopulateAVLBT(30);
+	myBST.PopulateAVLBT(num);
 
 	while (true)
 	{

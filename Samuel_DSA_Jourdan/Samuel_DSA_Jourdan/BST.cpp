@@ -11,7 +11,7 @@ BST::~BST()
 	//DELETE ALL NODES
 }
 
-void BST::PopulateAVLBT(int sum)
+void BST::populateAVLBT(int sum)
 {
 	int total = 0, current = 1;
 	while (true)
@@ -21,23 +21,23 @@ void BST::PopulateAVLBT(int sum)
 			break;
 		}
 		total += current;
-		AVLAdd(root, current);
+		avlAdd(root, current);
 		current++;
 	}
 }
 
-BTNode BST::Search(ItemType item)
+BTNode BST::search(ItemType item)
 {
 
 	return BTNode();
 }
 
-void BST::Insert(ItemType item)
+void BST::insert(ItemType item)
 {
-	AVLAdd(root, item);
+	avlAdd(root, item);
 }
 
-BTNode* BST::Add(BTNode* &node, ItemType item)
+BTNode* BST::add(BTNode* &node, ItemType item)
 {
 	if (node == nullptr)
 	{
@@ -49,16 +49,16 @@ BTNode* BST::Add(BTNode* &node, ItemType item)
 	{
 		if (item < node->item)
 		{
-			return Add(node->left, item);
+			return add(node->left, item);
 		}
 		else
 		{
-			return Add(node->right, item);
+			return add(node->right, item);
 		}
 	}
 }
 
-BTNode* BST::AVLAdd(BTNode* &node, ItemType item)
+BTNode* BST::avlAdd(BTNode* &node, ItemType item)
 {
 	if (node == nullptr)
 	{
@@ -72,92 +72,93 @@ BTNode* BST::AVLAdd(BTNode* &node, ItemType item)
 		BTNode* temp;
 		if (item < node->item)
 		{
-			temp = Add(node->left, item);
+			temp = add(node->left, item);
 		}
 		else
 		{
-			temp = Add(node->right, item);
+			temp = add(node->right, item);
 		}
 		if (node == root)
 		{
-			root = AVLRotate(node);
+			root = avlRotate(node);
 		}
 		else
 		{
-			AVLRotate(node);
+			avlRotate(node);
 		}
 		return temp;
 	}
 }
 
-int BST::GetHeight(BTNode* node)
+int BST::getHeight(BTNode* node)
 {
 	if (node == nullptr)
 	{
 		return 0;
 	}
-	return 1 + max(GetHeight(node->left), GetHeight(node->right));
+	return 1 + max(getHeight(node->left), getHeight(node->right));
 }
 
-bool BST::IsBalance()
+bool BST::isBalance()
 {
 	if (root != nullptr)
 	{
-		return IsBalance(root);
+		return isBalance(root);
 	}
 }
 
-bool BST::IsBalance(BTNode* node)
+bool BST::isBalance(BTNode* node)
 {
 	if (node != nullptr)
 	{
-		if (abs(GetHeight(node->left) - GetHeight(node->right)) <= 1)
+		if (abs(getHeight(node->left) - getHeight(node->right)) <= 1)
 		{
 			return true;
 		}
 	}
 }
 
-int BST::Balance(BTNode* node)
+int BST::balance(BTNode* node)
 {
 	if (node != nullptr)
 	{
-		return GetHeight(node->right) - GetHeight(node->left);
+		return getHeight(node->right) - getHeight(node->left);
 	}
 }
 
-BTNode* BST::AVLRotate(BTNode* node)
+BTNode* BST::avlRotate(BTNode* &node)
 {
-	int balance = Balance(node);
+	int balance = BST::balance(node);
 	//Main Tree - Left Heavy
 	if (balance < -1)
 	{
 		//Left SubTree - Right Heavy
-		if (Balance(node->left) > 1)
+		if (BST::balance(node->left) > 1)
 		{
-			return RotateLeftRight(node);
+			return rotateLeftRight(node);
 		}
 		else
 		{
-			return RotateRight(node);
+			return rotateRight(node);
 		}
 	}
 	//Main Tree - Right Heavy
 	else if (balance > 1)
 	{
 		//Right SubTree - Left Heavy
-		if (Balance(node->right) < -1)
+		if (BST::balance(node->right) < -1)
 		{
-			return RotateRightLeft(node);
+			return rotateRightLeft(node);
 		}
 		else
 		{
-			return RotateLeft(node);
+			return rotateLeft(node);
 		}
 	}
+	return node;
 }
 
-BTNode* &BST::RotateLeft(BTNode* node)
+BTNode* &BST::rotateLeft(BTNode* &node)
 {
 	BTNode* nodeC = node->right;
 	node->right = nodeC->left;
@@ -165,7 +166,7 @@ BTNode* &BST::RotateLeft(BTNode* node)
 	return nodeC;
 }
 
-BTNode* &BST::RotateRight(BTNode* node)
+BTNode* &BST::rotateRight(BTNode* &node)
 {
 	BTNode* nodeC = node->left;
 	node->left = nodeC->right;
@@ -173,81 +174,80 @@ BTNode* &BST::RotateRight(BTNode* node)
 	return nodeC;
 }
 
-BTNode* &BST::RotateLeftRight(BTNode* node)
+BTNode* &BST::rotateLeftRight(BTNode* &node)
 {
 	BTNode* nodeC = node->left;
-	node->left = RotateLeft(nodeC);
-	return RotateRight(node);
+	node->left = rotateLeft(nodeC);
+	return rotateRight(node);
 }
 
-BTNode* &BST::RotateRightLeft(BTNode* node)
+BTNode* &BST::rotateRightLeft(BTNode* &node)
 {
 	BTNode* nodeC = node->right;
-	node->right = RotateRight(nodeC);
-	return RotateLeft(node);
+	node->right = rotateRight(nodeC);
+	return rotateLeft(node);
 }
 
-int BST::CountNode(BTNode* node)
+int BST::countNode(BTNode* node)
 {
 	if (node == nullptr)
 	{
 		return 0;
 	}
-	return 1 + max(CountNode(node->left), CountNode(node->right));
+	return 1 + max(countNode(node->left), countNode(node->right));
 }
 
-Queue* BST::GetLevelByLevel(BTNode* node)
+Queue* BST::getLevelByLevel(BTNode* node)
 {
-	Queue* q = new Queue();
+	Queue q = Queue();
 	Queue tempQ = Queue();
+	Queue tempQ2 = Queue();
+	BTNode* ptr = node;
 	if (node != nullptr)
 	{
-		tempQ.enqueue(node);
-		q->enqueue(node);
-		BTNode* nowNode = node;
-		for (int i = 0; i < CountNode(node); i++)
+		tempQ2.enqueue(node);
+	}
+	for (int h = 1; h < getHeight(node); h++)
+	{
+		tempQ = tempQ2;
+		do
 		{
-			if (nowNode->left != nullptr)
+			if (ptr != nullptr)
 			{
-				q->enqueue(nowNode->left);
-				tempQ.enqueue(nowNode->left);
+				if (ptr->left != nullptr)
+				{
+					tempQ2.enqueue(ptr->left);
+				}
+				else
+				{
+					tempQ2.enqueue()
+				}
 			}
 			else
 			{
-				q->enqueue(nullptr);
+				tempQ2.enqueue()
 			}
-			if (nowNode->right != nullptr)
-			{
-				q->enqueue(nowNode->right);
-				tempQ.enqueue(nowNode->right);
-			}
-			else
-			{
-				q->enqueue(nullptr);
-			}
-			tempQ.dequeue(nowNode);
-		}
-		return q;
+		} while (!tempQ.isEmpty());
 	}
 }
 
-void BST::DisplayBT()
+void BST::displayBT()
 {
-	DisplayBT(root);
+	displayBT(root);
 }
 
-void BST::DisplayBT(BTNode* node)
+void BST::displayBT(BTNode* node)
 {
 	if (node != nullptr)
 	{
-		Queue* q = GetLevelByLevel(node);
-		int h = GetHeight(node);
+		Queue* q = getLevelByLevel(node);
+		int h = getHeight(node);
 		//Per level
 		for (int i = h-1; i >= 0; i++)
 		{
 			double space = pow(2, i);
 			//Left Spaces
-			DisplaySpaces((space / 2) - 0.5);
+			displaySpaces((space / 2) - 0.5);
 
 			//Number of Nodes per Level
 			for (int n = 0; n < h; n++ )
@@ -257,29 +257,29 @@ void BST::DisplayBT(BTNode* node)
 				q->dequeue(temp);
 				if (temp->item != NULL)
 				{
-					cout << temp->item;
+					std::cout << temp->item;
 				}
 				else
 				{
-					cout << "--";
+					std::cout << "--";
 				}
 				//Spaces in between Nodes
-				DisplaySpaces(space);
+				displaySpaces(space);
 			}
-			cout << endl;
+			std::cout << endl;
 		}
 	}
 }
 
-void BST::DisplaySpaces(int no)
+void BST::displaySpaces(int no)
 {
 	for (int i = 0; i < no; i++)
 	{
-		cout << " ";
+		std::cout << " ";
 	}
 }
 
-bool BST::Delete(ItemType item) 
+bool BST::deleteValue(ItemType item) 
 {
 	BTNode *currentNode = root;
 	BTNode *parentNode = NULL;

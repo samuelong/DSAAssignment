@@ -31,7 +31,7 @@ bool Queue::enqueue(ItemType* newItem)
 	return true;
 }
 
-bool Queue::dequeue()
+bool Queue::Delete()
 {
 	if (!isEmpty())
 	{
