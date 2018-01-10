@@ -1,20 +1,25 @@
 #pragma once
 
-//Binary Tree Node
-typedef int ItemType;
-struct BTNode
-{
-	ItemType item;
-	BTNode* left;
-	BTNode* right;
-};
+#include <minmax.h>
+#include <math.h>
+#include <iostream>
+#include "Queue.h"
+#include "BinaryNode.h"
 
 //Binary Search Tree
 class BST
 {
 private:
+	
+	//Binary Tree Node
+	typedef int ItemType;
+
 	BTNode* root;
 
+	//Adds a new BTNode into the BT
+	BTNode* Add(BTNode* &node, ItemType item);
+	//Adds a new BTNode into the BT with AVL Tree
+	BTNode* AVLAdd(BTNode* &node, ItemType item);
 	//Returns the BTNode by Index
 	BTNode GetNode(int nodeIndex);
 	//Get Node Height
@@ -26,17 +31,24 @@ private:
 	//Returns the height difference between 2 subtrees under the main tree
 	int Balance(BTNode* node);
 	//Does Rotation if required.
-	bool AVLRotate(BTNode* node);
+	BTNode* AVLRotate(BTNode* node);
 	//RotateLeft
-	BTNode* RotateLeft(BTNode* node);
+	BTNode* &RotateLeft(BTNode* node);
 	//RotateRight
-	BTNode* RotateRight(BTNode* node);
+	BTNode* &RotateRight(BTNode* node);
 	//RotateLeft-Right
-	BTNode* RotateLeftRight(BTNode* node);
+	BTNode* &RotateLeftRight(BTNode* node);
 	//RotateRight-Left
-	BTNode* RotateRightLeft(BTNode* node);
+	BTNode* &RotateRightLeft(BTNode* node);
+	//Get Items by Level By Level Traversal
+	Queue* GetLevelByLevel(BTNode* node);
+	//Display Spaces
+	void DisplaySpaces(int no);
+	//Count the number of Nodes
+	int CountNode(BTNode* node);
 
 public:
+
 	//Default Constructors
 	BST();
 	~BST();
@@ -44,14 +56,12 @@ public:
 	//ADD IN MORE OPERATIONS IF REQUIRED.
 	//FOR MAIN FUNCTIONALITIES
 
+	//Inserts a BTNode into the BST
+	void Insert(ItemType item);
 	//Populate AVL BT by SUM of Nodes be larger or equal to Parameter at minimum
 	void PopulateAVLBT(int sum);
 	//Search for the BTNode based on item
 	BTNode Search(ItemType item);
-	//Adds a new BTNode into the BT
-	BTNode* Add(BTNode* node, ItemType item);
-	//Adds a new BTNode into the BT with AVL Tree
-	BTNode* AVLAdd(BTNode* node, ItemType item);
 	//Deletes the BTNode based on item
 	bool Delete(ItemType item);
 	//Display all items in Ascending order

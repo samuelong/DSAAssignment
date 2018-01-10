@@ -1,9 +1,11 @@
 // Samuel_DSA_Jourdan.cpp : Defines the entry point for the console application.
 //
 
+
 #include "stdafx.h"
 #include <iostream>
 #include "BST.h"
+#include "Queue.h"
 
 
 int main()
@@ -31,8 +33,10 @@ int main()
 		switch (choice)
 		{
 		case 1:
+			myBST.DisplayBT();
 			break;
 		case 2:
+			myBST.Insert(500);
 			break;
 		case 3:
 			break;
