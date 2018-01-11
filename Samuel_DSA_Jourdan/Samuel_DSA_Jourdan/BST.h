@@ -65,7 +65,9 @@ public:
 	//Deletes the BTNode based on item
 	bool deleteValue(ItemType item);
 	//Display all items in Ascending order
-	void displayItemAsc();
+	void displayItemAsc(BTNode* node);
+	//Display the kth node
+	void displayKNode(BTNode* node);
 	//Display the Binary Tree
 	void displayBT();
 	void displayBT(BTNode* node);

@@ -412,3 +412,19 @@ bool BST::deleteValue(ItemType item)
 	}
 }
 
+void BST::displayItemAsc(BTNode* node) 
+{
+	BTNode* currentNode = root;
+	if (currentNode->item != NULL) 
+	{
+		displayItemAsc(currentNode->left);
+		cout << currentNode->item << endl;
+		displayItemAsc(currentNode->right);
+	}
+}
+
+void BST::displayKNode() 
+{
+
+}
+
