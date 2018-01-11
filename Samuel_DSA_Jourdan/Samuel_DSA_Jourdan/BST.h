@@ -3,6 +3,7 @@
 #include <minmax.h>
 #include <math.h>
 #include <iostream>
+#include <iomanip>
 #include "Queue.h"
 #include "BinaryNode.h"
 
@@ -33,15 +34,15 @@ private:
 	//Returns the height difference between 2 subtrees under the main tree
 	int balance(BTNode* node);
 	//Does Rotation if required.
-	BTNode* avlRotate(BTNode* &node);
+	BTNode* avlRotate(BTNode* node);
 	//RotateLeft
-	BTNode* &rotateLeft(BTNode* &node);
+	BTNode* rotateLeft(BTNode* node);
 	//RotateRight
-	BTNode* &rotateRight(BTNode* &node);
+	BTNode* rotateRight(BTNode* node);
 	//RotateLeft-Right
-	BTNode* &rotateLeftRight(BTNode* &node);
+	BTNode* rotateLeftRight(BTNode* node);
 	//RotateRight-Left
-	BTNode* &rotateRightLeft(BTNode* &node);
+	BTNode* rotateRightLeft(BTNode* node);
 	//Display spaces
 	void displaySpaces(int no);
 
@@ -59,7 +60,7 @@ public:
 	//Populate AVL BT by SUM of Nodes be larger or equal to Parameter at minimum
 	void populateAVLBT(int sum);
 	//Search for the BTNode based on item
-	BTNode search(ItemType item);
+	BTNode* search(BTNode* node, ItemType item);
 	//Deletes the BTNode based on item
 	bool deleteValue(ItemType item);
 	//Display all items in Ascending order
