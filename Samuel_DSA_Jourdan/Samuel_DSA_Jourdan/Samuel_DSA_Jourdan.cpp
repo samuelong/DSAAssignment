@@ -8,12 +8,24 @@
 #include "Queue.h"
 
 
+void setIntVar(int &var, string output)
+{
+	std::cin >> var;
+	while (std::cin.fail())
+	{
+		std::cout << output;
+		std::cin.clear();
+		std::cin.ignore(256, '\n');
+		std::cin >> var;
+	}
+}
+
 int main()
 {
 	std::cout << "Welcome to the Binary Search Tree Creator Application\n";
 	std::cout << "Please provide a positive number for the creation of the BST: ";
 	int num;
-	std::cin >> num;
+	setIntVar(num, "Invalid input. Please provide a proper input value (Integer)\nInput:");
 	//Create BST.
 	BST myBST = BST();
 	myBST.populateAVLBT(num);
@@ -25,45 +37,45 @@ int main()
 		std::cout << "2: Add a value\n";
 		std::cout << "3: Remove a value\n";
 		std::cout << "4: Display values in Ascending order\n";
-		std::cout << "5: Display the value in a specific Node by index using Level By Level Traversal\n\n";
+		std::cout << "5: Display the value in a specific Node by index using Level By Level Traversal\n";
 		std::cout << "6: Display the Binary Tree\n";
 		std::cout << "0: Exit\n";
 		std::cout << "Input: ";
-		std::cin >> choice;
+		setIntVar(choice, "Invalid input. Please provide an Integer\nInput: ");
 		int value;
 		switch (choice)
 		{
 		case 1:
-			cout << "Provide a value to search :";
-			cin >> value;
+			std::cout << "Provide a value to search :";
+			setIntVar(value, "Invalid input. Please provide an Integer\nInput:");
 			if (myBST.search(value))
 			{
-				cout << "Value found in Binary Tree\n";
+				std::cout << "Value found in Binary Tree\n";
 			}
 			else
 			{
-				cout << "Value not found in Binary Tree\n";
+				std::cout << "Value not found in Binary Tree\n";
 			}
 			break;
 		case 2:
-			cout << "Provide a value to be added :";
-			cin >> value;
+			std::cout << "Provide a value to be added :";
+			setIntVar(value, "Invalid input. Please provide an Integer\nInput:");
 			myBST.insert(value);
 			break;
 		case 3:
-			int userDelete;
+			int nodeDelete;
 			std::cout << "Enter value to be deleted: ";
-			std::cin >> userDelete;
-			myBST.deleteValue(userDelete);
+			setIntVar(nodeDelete, "Invalid input. Please provide an Integer\nInput:");
+			myBST.deleteValue(nodeDelete);
 			break;
 		case 4:
 			myBST.displayItemAsc();
 			break;
 		case 5:
-			int userIndex;
+			int nodeIndex;
 			std::cout << "Enter your index: ";
-			std::cin >> userIndex;
-			myBST.displayKNode(userIndex);
+			setIntVar(nodeIndex, "Invalid input. Please provide an index(Integer)\nInput:");
+			myBST.displayKNode(nodeIndex);
 			break;
 		case 6:
 			myBST.displayBT();
@@ -71,6 +83,8 @@ int main()
 		case 0:
 			break;
 		default:
+			std::cout << "Please provide a valid input that is indicated";
+			choice = -1;
 			break;
 		}
 	}

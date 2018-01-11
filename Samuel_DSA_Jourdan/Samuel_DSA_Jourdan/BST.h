@@ -62,7 +62,7 @@ public:
 	//Populate AVL BT by SUM of Nodes be larger or equal to Parameter at minimum
 	void populateAVLBT(int sum);
 	//Search for the BTNode based on item
-	BTNode* search(ItemType item);
+	bool search(ItemType item);
 	//Deletes the BTNode based on item
 	bool deleteValue(ItemType item);
 	//Display all items in Ascending order
