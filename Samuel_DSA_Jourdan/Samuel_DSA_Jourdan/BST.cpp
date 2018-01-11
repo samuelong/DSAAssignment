@@ -415,8 +415,34 @@ void BST::displayItemAsc(BTNode* node)
 	}
 }
 
-void BST::displayKNode() 
+void BST::displayKNode(int kNode) 
 {
+	Queue* testQueue = new Queue();
+	Queue* finalQueue = new Queue();
+	
+	if (root == NULL) 
+	{
+		std::cout << "There is nothing in the tree.";
+	}
 
+	testQueue->enqueue(root);
+	while (testQueue->isEmpty == false) 
+	{
+		BTNode* frontNode;
+		testQueue->dequeue(frontNode);
+		finalQueue->enqueue(frontNode);
+
+		//Enqueue left child
+		if (frontNode->left != NULL) 
+		{
+			testQueue->enqueue(frontNode->left);
+		}
+
+		//Enqueue right child
+		if (frontNode->right != NULL) 
+		{
+			testQueue->enqueue(frontNode->right);
+		}
+	}
 }
 

@@ -65,7 +65,7 @@ public:
 	//Display all items in Ascending order
 	void displayItemAsc(BTNode* node);
 	//Display the kth node
-	void displayKNode(BTNode* node);
+	void displayKNode(int kNode);
 	//Display the Binary Tree
 	void displayBT();
 	void displayBT(BTNode* node);
