@@ -18,17 +18,16 @@ int main()
 	BST myBST = BST();
 	myBST.populateAVLBT(num);
 
-	while (true)
+	int choice = -1;
+	while (choice != 0)
 	{
-		system("CLS");
 		std::cout << "1: Search for a value\n";
 		std::cout << "2: Add a value\n";
 		std::cout << "3: Remove a value\n";
 		std::cout << "4: Display values in Ascending order\n";
 		std::cout << "5: Display the value in a specific Node by index using Level By Level Traversal\n\n";
-		std::cout << "0: Exit";
+		std::cout << "0: Exit\n";
 		std::cout << "Input: ";
-		int choice;
 		std::cin >> choice;
 		switch (choice)
 		{
@@ -45,7 +44,7 @@ int main()
 		case 5:
 			break;
 		case 0:
-			
+			break;
 		default:
 			break;
 		}

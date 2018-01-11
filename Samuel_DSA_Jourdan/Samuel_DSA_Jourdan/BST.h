@@ -16,8 +16,6 @@ private:
 
 	BTNode* root;
 
-	//Adds a new BTNode into the BT
-	BTNode* add(BTNode* &node, ItemType item);
 	//Adds a new BTNode into the BT with AVL Tree
 	BTNode* avlAdd(BTNode* &node, ItemType item);
 	//Returns the BTNode by Index
@@ -31,7 +29,7 @@ private:
 	//Count the number of nodes
 	int countNode(BTNode* node);
 	//Get Level By Level Queue of BT
-	Queue getLevelByLevel(BTNode* node);
+	Queue* getLevelByLevel(BTNode* node);
 	//Returns the height difference between 2 subtrees under the main tree
 	int balance(BTNode* node);
 	//Does Rotation if required.
