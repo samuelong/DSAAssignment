@@ -26,6 +26,11 @@ void BST::populateAVLBT(int sum)
 		current++;
 	}}
 
+BTNode* BST::search(ItemType item)
+{
+	return search(root, item);
+}
+
 BTNode* BST::search(BTNode* node, ItemType item)
 {
 	if (node != nullptr)
@@ -449,7 +454,7 @@ void BST::displayKNode(int kNode)
 	}
 
 	testQueue.enqueue(root);
-	while (testQueue.isEmpty == false) 
+	while (testQueue.isEmpty() == false) 
 	{
 		BTNode* frontNode;
 		testQueue.dequeue(frontNode);
@@ -468,12 +473,11 @@ void BST::displayKNode(int kNode)
 		}
 	}
 
-	BTNode* valueNode;
+	BTNode* valueNode = nullptr;
 	for (int i = 1; i <= kNode; i++) 
 	{
 		testQueue.dequeue(valueNode);
 	}
 
-	cout << "The value is: " << valueNode << endl;
+	cout << "The value is: " << valueNode->item << endl;
 }
-

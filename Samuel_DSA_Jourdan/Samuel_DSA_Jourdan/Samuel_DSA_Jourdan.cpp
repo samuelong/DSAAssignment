@@ -30,14 +30,23 @@ int main()
 		std::cout << "0: Exit\n";
 		std::cout << "Input: ";
 		std::cin >> choice;
+		int value;
 		switch (choice)
 		{
 		case 1:
-			myBST.displayBT();
+			cout << "Provide a value to search :";
+			cin >> value;
+			if (myBST.search(value))
+			{
+				cout << "Value found in Binary Tree\n";
+			}
+			else
+			{
+				cout << "Value not found in Binary Tree\n";
+			}
 			break;
 		case 2:
 			cout << "Provide a value to be added :";
-			int value;
 			cin >> value;
 			myBST.insert(value);
 			break;
@@ -46,6 +55,9 @@ int main()
 		case 4:
 			break;
 		case 5:
+			break;
+		case 6:
+			myBST.displayBT();
 			break;
 		case 0:
 			break;
