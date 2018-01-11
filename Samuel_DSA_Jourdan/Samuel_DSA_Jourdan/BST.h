@@ -31,7 +31,7 @@ private:
 	//Count the number of nodes
 	int countNode(BTNode* node);
 	//Get Level By Level Queue of BT
-	Queue* BST::getLevelByLevel(BTNode* node);
+	Queue getLevelByLevel(BTNode* node);
 	//Returns the height difference between 2 subtrees under the main tree
 	int balance(BTNode* node);
 	//Does Rotation if required.

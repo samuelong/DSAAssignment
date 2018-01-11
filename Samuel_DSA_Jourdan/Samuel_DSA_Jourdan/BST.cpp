@@ -197,37 +197,51 @@ int BST::countNode(BTNode* node)
 	return 1 + max(countNode(node->left), countNode(node->right));
 }
 
-Queue* BST::getLevelByLevel(BTNode* node)
+Queue BST::getLevelByLevel(BTNode* node)
 {
 	Queue q = Queue();
 	Queue tempQ = Queue();
-	Queue tempQ2 = Queue();
 	BTNode* ptr = node;
 	if (node != nullptr)
 	{
-		tempQ2.enqueue(node);
-	}
-	for (int h = 1; h < getHeight(node); h++)
-	{
-		tempQ = tempQ2;
-		do
+		tempQ.enqueue(node);
+		// Loop through level 1 to the end
+		for (int h = 1; h < getHeight(node); h++)
 		{
-			if (ptr != nullptr)
+			// Number of nodes in a height
+			for (int n = 0; n < pow(2, h); n++)
 			{
-				if (ptr->left != nullptr)
+				// Node is nullptr, resulting in left and right child to be null;
+				if (ptr == nullptr)
 				{
-					tempQ2.enqueue(ptr->left);
+					tempQ.enqueue(nullptr);
+					tempQ.enqueue(nullptr);
 				}
 				else
 				{
-					tempQ2.enqueue()
+					if (ptr->left != nullptr)
+					{
+						tempQ.enqueue(ptr->left);
+					}
+					else
+					{
+						tempQ.enqueue(nullptr);
+					}
+					if (ptr->right != nullptr)
+					{
+						tempQ.enqueue(ptr->right);
+					}
+					else
+					{
+						tempQ.enqueue(nullptr);
+					}
 				}
+				BTNode* temp = nullptr;
+				tempQ.dequeue(temp);
+				q.enqueue(temp);
 			}
-			else
-			{
-				tempQ2.enqueue()
-			}
-		} while (!tempQ.isEmpty());
+		}
+		return q;
 	}
 }
 
@@ -240,7 +254,7 @@ void BST::displayBT(BTNode* node)
 {
 	if (node != nullptr)
 	{
-		Queue* q = getLevelByLevel(node);
+		Queue q = getLevelByLevel(node);
 		int h = getHeight(node);
 		//Per level
 		for (int i = h-1; i >= 0; i++)
@@ -254,7 +268,7 @@ void BST::displayBT(BTNode* node)
 			{
 				//Item in Node
 				BTNode* temp = new BTNode();
-				q->dequeue(temp);
+				q.dequeue(temp);
 				if (temp->item != NULL)
 				{
 					std::cout << temp->item;

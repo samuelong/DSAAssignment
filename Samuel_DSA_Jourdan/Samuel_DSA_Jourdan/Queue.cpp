@@ -10,7 +10,7 @@ Queue::~Queue()
 {
 	while (!isEmpty())
 	{
-		dequeue();
+		deleteItem();
 	}
 }
 
@@ -31,7 +31,7 @@ bool Queue::enqueue(ItemType* newItem)
 	return true;
 }
 
-bool Queue::Delete()
+bool Queue::deleteItem()
 {
 	if (!isEmpty())
 	{
@@ -47,7 +47,7 @@ bool Queue::Delete()
 	return false;
 }
 
-bool Queue::dequeue(ItemType* item)
+bool Queue::dequeue(ItemType* &item)
 {
 	if (!isEmpty())
 	{

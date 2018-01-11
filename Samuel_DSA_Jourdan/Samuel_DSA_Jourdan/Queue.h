@@ -33,10 +33,10 @@ public:
 
 	// dequeue item from front of queue
 
-	bool dequeue();
+	bool deleteItem();
 
 	// dequeue and retrieve item from front of queue
-	bool dequeue(ItemType* item);
+	bool dequeue(ItemType* &item);
 
 
 	// retrieve item from front of queue

@@ -16,7 +16,7 @@ int main()
 	std::cin >> num;
 	//Create BST.
 	BST myBST = BST();
-	myBST.PopulateAVLBT(num);
+	myBST.populateAVLBT(num);
 
 	while (true)
 	{
@@ -33,10 +33,10 @@ int main()
 		switch (choice)
 		{
 		case 1:
-			myBST.DisplayBT();
+			myBST.displayBT();
 			break;
 		case 2:
-			myBST.Insert(500);
+			myBST.insert(500);
 			break;
 		case 3:
 			break;
