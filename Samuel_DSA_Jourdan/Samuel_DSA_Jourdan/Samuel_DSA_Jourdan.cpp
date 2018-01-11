@@ -26,6 +26,7 @@ int main()
 		std::cout << "3: Remove a value\n";
 		std::cout << "4: Display values in Ascending order\n";
 		std::cout << "5: Display the value in a specific Node by index using Level By Level Traversal\n\n";
+		std::cout << "6: Display the Binary Tree\n";
 		std::cout << "0: Exit\n";
 		std::cout << "Input: ";
 		std::cin >> choice;
@@ -35,7 +36,10 @@ int main()
 			myBST.displayBT();
 			break;
 		case 2:
-			myBST.insert(500);
+			cout << "Provide a value to be added :";
+			int value;
+			cin >> value;
+			myBST.insert(value);
 			break;
 		case 3:
 			break;

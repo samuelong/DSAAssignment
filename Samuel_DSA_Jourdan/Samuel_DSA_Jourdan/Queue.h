@@ -40,7 +40,7 @@ public:
 
 
 	// retrieve item from front of queue
-	void getFront(ItemType* item);
+	void getFront(ItemType* &item);
 
 	// check if the queue is empty
 	bool isEmpty();

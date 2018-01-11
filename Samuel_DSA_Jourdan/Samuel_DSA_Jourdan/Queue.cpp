@@ -60,10 +60,9 @@ bool Queue::dequeue(ItemType* &item)
 		item = tempptr->item;
 		return true;
 	}
-	return false;
-}
+	return false;}
 
-void Queue::getFront(ItemType* item)
+void Queue::getFront(ItemType* &item)
 {
 	if (!isEmpty())
 	{

@@ -25,10 +25,23 @@ void BST::populateAVLBT(int sum)
 		current++;
 	}}
 
-BTNode BST::search(ItemType item)
+BTNode* BST::search(BTNode* node, ItemType item)
 {
-
-	return BTNode();
+	if (node != nullptr)
+	{
+		if (item == node->item)
+		{
+			return node;
+		}
+		if (item < node->item)
+		{
+			return search(node->left, item);
+		}
+		else
+		{
+			return search(node->right, item);
+		}
+	}
 }
 
 void BST::insert(ItemType item)
@@ -56,6 +69,10 @@ BTNode* BST::avlAdd(BTNode* &node, ItemType item)
 			temp = avlAdd(node->left, item);
 			node = avlRotate(node);
 			return temp;
+		}
+		else if (item == node->item)
+		{
+			return nullptr;
 		}
 		else
 		{
@@ -102,7 +119,7 @@ int BST::balance(BTNode* node)
 	}
 }
 
-BTNode* BST::avlRotate(BTNode* &node)
+BTNode* BST::avlRotate(BTNode* node)
 {
 	int balance = BST::balance(node);
 	//Main Tree - Left Heavy
@@ -134,7 +151,7 @@ BTNode* BST::avlRotate(BTNode* &node)
 	return node;
 }
 
-BTNode* &BST::rotateLeft(BTNode* &node)
+BTNode* BST::rotateLeft(BTNode* node)
 {
 	BTNode* nodeC = node->right;
 	node->right = nodeC->left;
@@ -142,7 +159,7 @@ BTNode* &BST::rotateLeft(BTNode* &node)
 	return nodeC;
 }
 
-BTNode* &BST::rotateRight(BTNode* &node)
+BTNode* BST::rotateRight(BTNode* node)
 {
 	BTNode* nodeC = node->left;
 	node->left = nodeC->right;
@@ -150,14 +167,14 @@ BTNode* &BST::rotateRight(BTNode* &node)
 	return nodeC;
 }
 
-BTNode* &BST::rotateLeftRight(BTNode* &node)
+BTNode* BST::rotateLeftRight(BTNode* node)
 {
 	BTNode* nodeC = node->left;
 	node->left = rotateLeft(nodeC);
 	return rotateRight(node);
 }
 
-BTNode* &BST::rotateRightLeft(BTNode* &node)
+BTNode* BST::rotateRightLeft(BTNode* node)
 {
 	BTNode* nodeC = node->right;
 	node->right = rotateRight(nodeC);
@@ -237,14 +254,16 @@ void BST::displayBT(BTNode* node)
 		//Top level
 		displaySpaces(((space / 2) - 0.5)*2);
 		BTNode* temp = nullptr;
-		q->dequeue(temp);
+		q->getFront(temp);
 		if (temp->item != NULL)
 		{
-			std::cout << temp->item;
+			std::cout << std::setw(3) << std::setfill('=') << temp->item;
+			q->dequeue(temp);
 		}
 		else
 		{
-			std::cout << "--";
+			std::cout << std::setw(3) << std::setfill('=') << "";
+			q->deleteItem();
 		}
 		displaySpaces(((space / 2) - 0.5)*2);
 		std::cout << std::endl;
@@ -260,20 +279,23 @@ void BST::displayBT(BTNode* node)
 			for (int n = 0; n < pow(2, h-i-1); n++ )
 			{
 				//Item in Node
-				q->dequeue(temp);
+				q->getFront(temp);
 				if (temp->item != NULL)
 				{
-					std::cout << temp->item;
+					std::cout << std::setw(3) << std::setfill('=') << temp->item;
+					q->dequeue(temp);
 				}
 				else
 				{
-					std::cout << "--";
+					std::cout << std::setw(3) << std::setfill('=') << "";
+					q->deleteItem();
 				}
 				//Spaces in between Nodes
 				displaySpaces(space*2-0.5);
 			}
 			std::cout << endl;
 		}
+		delete q;
 	}
 }
 
@@ -281,7 +303,7 @@ void BST::displaySpaces(int no)
 {
 	for (int i = 0; i < no; i++)
 	{
-		std::cout << "==";
+		std::cout << std::setw(3) << std::setfill('=') << "=";
 	}
 }
 
@@ -419,4 +441,3 @@ void BST::displayKNode()
 {
 
 }
-
