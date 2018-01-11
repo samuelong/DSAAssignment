@@ -23,8 +23,7 @@ void BST::populateAVLBT(int sum)
 		total += current;
 		avlAdd(root, current);
 		current++;
-	}
-}
+	}}
 
 BTNode BST::search(ItemType item)
 {
@@ -37,34 +36,16 @@ void BST::insert(ItemType item)
 	avlAdd(root, item);
 }
 
-BTNode* BST::add(BTNode* &node, ItemType item)
-{
-	if (node == nullptr)
-	{
-		node = new BTNode();
-		node->item = item;
-		return node;
-	}
-	else
-	{
-		if (item < node->item)
-		{
-			return add(node->left, item);
-		}
-		else
-		{
-			return add(node->right, item);
-		}
-	}
-}
-
 BTNode* BST::avlAdd(BTNode* &node, ItemType item)
 {
 	if (node == nullptr)
 	{
 		node = new BTNode();
 		node->item = item;
-		root = node;
+		if (root == nullptr)
+		{
+			root = node;
+		}
 		return node;
 	}
 	else
@@ -72,21 +53,16 @@ BTNode* BST::avlAdd(BTNode* &node, ItemType item)
 		BTNode* temp;
 		if (item < node->item)
 		{
-			temp = add(node->left, item);
+			temp = avlAdd(node->left, item);
+			node = avlRotate(node);
+			return temp;
 		}
 		else
 		{
-			temp = add(node->right, item);
+			temp = avlAdd(node->right, item);
+			node = avlRotate(node);
+			return temp;
 		}
-		if (node == root)
-		{
-			root = avlRotate(node);
-		}
-		else
-		{
-			avlRotate(node);
-		}
-		return temp;
 	}
 }
 
@@ -197,14 +173,14 @@ int BST::countNode(BTNode* node)
 	return 1 + max(countNode(node->left), countNode(node->right));
 }
 
-Queue BST::getLevelByLevel(BTNode* node)
+Queue* BST::getLevelByLevel(BTNode* node)
 {
-	Queue q = Queue();
-	Queue tempQ = Queue();
+	Queue* q = new Queue();
+	Queue* tempQ = new Queue();
 	BTNode* ptr = node;
 	if (node != nullptr)
 	{
-		tempQ.enqueue(node);
+		q->enqueue(ptr);
 		// Loop through level 1 to the end
 		for (int h = 1; h < getHeight(node); h++)
 		{
@@ -212,35 +188,35 @@ Queue BST::getLevelByLevel(BTNode* node)
 			for (int n = 0; n < pow(2, h); n++)
 			{
 				// Node is nullptr, resulting in left and right child to be null;
-				if (ptr == nullptr)
+				if (ptr->item == NULL)
 				{
-					tempQ.enqueue(nullptr);
-					tempQ.enqueue(nullptr);
+					tempQ->enqueue(new BTNode());
+					tempQ->enqueue(new BTNode());
 				}
 				else
 				{
 					if (ptr->left != nullptr)
 					{
-						tempQ.enqueue(ptr->left);
+						tempQ->enqueue(ptr->left);
 					}
 					else
 					{
-						tempQ.enqueue(nullptr);
+						tempQ->enqueue(new BTNode());
 					}
 					if (ptr->right != nullptr)
 					{
-						tempQ.enqueue(ptr->right);
+						tempQ->enqueue(ptr->right);
 					}
 					else
 					{
-						tempQ.enqueue(nullptr);
+						tempQ->enqueue(new BTNode());
 					}
 				}
-				BTNode* temp = nullptr;
-				tempQ.dequeue(temp);
-				q.enqueue(temp);
+				tempQ->dequeue(ptr);
+				q->enqueue(ptr);
 			}
 		}
+		delete tempQ;
 		return q;
 	}
 }
@@ -254,21 +230,37 @@ void BST::displayBT(BTNode* node)
 {
 	if (node != nullptr)
 	{
-		Queue q = getLevelByLevel(node);
+		Queue* q = getLevelByLevel(node);
 		int h = getHeight(node);
-		//Per level
-		for (int i = h-1; i >= 0; i++)
+		double space = pow(2, h-1);
+
+		//Top level
+		displaySpaces(((space / 2) - 0.5)*2);
+		BTNode* temp = nullptr;
+		q->dequeue(temp);
+		if (temp->item != NULL)
 		{
-			double space = pow(2, i);
+			std::cout << temp->item;
+		}
+		else
+		{
+			std::cout << "--";
+		}
+		displaySpaces(((space / 2) - 0.5)*2);
+		std::cout << std::endl;
+
+		//Every other level
+		for (int i = h-2; i >= 0; i--)
+		{
+			space = pow(2, i);
 			//Left Spaces
-			displaySpaces((space / 2) - 0.5);
+			displaySpaces(((space / 2) - 0.5)*2);
 
 			//Number of Nodes per Level
-			for (int n = 0; n < h; n++ )
+			for (int n = 0; n < pow(2, h-i-1); n++ )
 			{
 				//Item in Node
-				BTNode* temp = new BTNode();
-				q.dequeue(temp);
+				q->dequeue(temp);
 				if (temp->item != NULL)
 				{
 					std::cout << temp->item;
@@ -278,7 +270,7 @@ void BST::displayBT(BTNode* node)
 					std::cout << "--";
 				}
 				//Spaces in between Nodes
-				displaySpaces(space);
+				displaySpaces(space*2-0.5);
 			}
 			std::cout << endl;
 		}
@@ -289,7 +281,7 @@ void BST::displaySpaces(int no)
 {
 	for (int i = 0; i < no; i++)
 	{
-		std::cout << " ";
+		std::cout << "/|\";
 	}
 }
 
