@@ -432,6 +432,11 @@ bool BST::deleteValue(ItemType item)
 	}
 }
 
+void BST::displayItemAsc() 
+{
+	displayItemAsc(root);
+}
+
 void BST::displayItemAsc(BTNode* node) 
 {
 	BTNode* currentNode = root;
