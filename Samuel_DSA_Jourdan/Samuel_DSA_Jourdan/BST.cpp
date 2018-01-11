@@ -281,7 +281,7 @@ void BST::displaySpaces(int no)
 {
 	for (int i = 0; i < no; i++)
 	{
-		std::cout << "/|\";
+		std::cout << "==";
 	}
 }
 
