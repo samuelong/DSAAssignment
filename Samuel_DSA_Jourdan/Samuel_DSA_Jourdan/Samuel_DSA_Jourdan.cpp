@@ -38,10 +38,19 @@ int main()
 			myBST.insert(500);
 			break;
 		case 3:
+			int userDelete;
+			std::cout << "Enter value to be deleted: ";
+			std::cin >> userDelete;
+			myBST.deleteValue(userDelete);
 			break;
 		case 4:
+			myBST.displayItemAsc();
 			break;
 		case 5:
+			int userIndex;
+			std::cout << "Enter your index: ";
+			std::cin >> userIndex;
+			myBST.displayKNode(userIndex);
 			break;
 		case 0:
 			break;
