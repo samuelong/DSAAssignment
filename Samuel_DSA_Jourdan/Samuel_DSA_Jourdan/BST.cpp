@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "BST.h"
+#include <iostream>
 
 BST::BST()
 {
@@ -417,32 +418,40 @@ void BST::displayItemAsc(BTNode* node)
 
 void BST::displayKNode(int kNode) 
 {
-	Queue* testQueue = new Queue();
-	Queue* finalQueue = new Queue();
+	Queue testQueue;
+	Queue finalQueue;
 	
 	if (root == NULL) 
 	{
 		std::cout << "There is nothing in the tree.";
 	}
 
-	testQueue->enqueue(root);
-	while (testQueue->isEmpty == false) 
+	testQueue.enqueue(root);
+	while (testQueue.isEmpty == false) 
 	{
 		BTNode* frontNode;
-		testQueue->dequeue(frontNode);
-		finalQueue->enqueue(frontNode);
+		testQueue.dequeue(frontNode);
+		finalQueue.enqueue(frontNode);
 
 		//Enqueue left child
 		if (frontNode->left != NULL) 
 		{
-			testQueue->enqueue(frontNode->left);
+			testQueue.enqueue(frontNode->left);
 		}
 
 		//Enqueue right child
 		if (frontNode->right != NULL) 
 		{
-			testQueue->enqueue(frontNode->right);
+			testQueue.enqueue(frontNode->right);
 		}
 	}
+
+	BTNode* valueNode;
+	for (int i = 1; i <= kNode; i++) 
+	{
+		testQueue.dequeue(valueNode);
+	}
+
+	cout << "The value is: " << valueNode << endl;
 }
 
