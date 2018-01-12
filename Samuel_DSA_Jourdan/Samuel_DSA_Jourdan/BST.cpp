@@ -26,6 +26,18 @@ void BST::populateAVLBT(int sum)
 		current++;
 	}}
 
+bool BST::search(ItemType item)
+{
+	if (search(root, item) != nullptr)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
 BTNode* BST::search(BTNode* node, ItemType item)
 {
 	if (node != nullptr)
@@ -43,6 +55,7 @@ BTNode* BST::search(BTNode* node, ItemType item)
 			return search(node->right, item);
 		}
 	}
+	return nullptr;
 }
 
 void BST::insert(ItemType item)
@@ -258,12 +271,12 @@ void BST::displayBT(BTNode* node)
 		q->getFront(temp);
 		if (temp->item != NULL)
 		{
-			std::cout << std::setw(3) << std::setfill('=') << temp->item;
+			std::cout << std::setw(3) << std::setfill('*') << left << temp->item;
 			q->dequeue(temp);
 		}
 		else
 		{
-			std::cout << std::setw(3) << std::setfill('=') << "";
+			std::cout << std::setw(3) << std::setfill('*') << left << "";
 			q->deleteItem();
 		}
 		displaySpaces(((space / 2) - 0.5)*2);
@@ -283,12 +296,12 @@ void BST::displayBT(BTNode* node)
 				q->getFront(temp);
 				if (temp->item != NULL)
 				{
-					std::cout << std::setw(3) << std::setfill('=') << temp->item;
+					std::cout << std::setw(3) << std::setfill('*') << left << temp->item;
 					q->dequeue(temp);
 				}
 				else
 				{
-					std::cout << std::setw(3) << std::setfill('=') << "";
+					std::cout << std::setw(3) << std::setfill('*') << left << "";
 					q->deleteItem();
 				}
 				//Spaces in between Nodes
@@ -304,18 +317,18 @@ void BST::displaySpaces(int no)
 {
 	for (int i = 0; i < no; i++)
 	{
-		std::cout << std::setw(3) << std::setfill('=') << "=";
+		std::cout << std::setw(3) << std::setfill(' ') << left << " ";
 	}
 }
 
 bool BST::deleteValue(ItemType item) 
 {
 	BTNode *currentNode = root;
-	BTNode *parentNode = NULL;
+	BTNode *parentNode = nullptr;
 	bool checkLeft = false;
 	bool found = false;
 
-	while (!found && currentNode != NULL)
+	while (!found && currentNode != nullptr)
 	{
 		if (item == currentNode->item) 
 		{
@@ -341,7 +354,7 @@ bool BST::deleteValue(ItemType item)
 	if (found) 
 	{
 		//if the deleted node has no children
-		if (currentNode->right == NULL && currentNode->left == NULL) 
+		if (currentNode->right == nullptr && currentNode->left == nullptr)
 		{
 			//check to see if it's the root node being deleted
 			if (currentNode == root) 
@@ -353,7 +366,7 @@ bool BST::deleteValue(ItemType item)
 			//not root node and is a left child
 			else if (checkLeft) 
 			{
-				parentNode->left = NULL;
+				parentNode->left = nullptr;
 				delete currentNode;
 				return true;
 			}
@@ -361,7 +374,7 @@ bool BST::deleteValue(ItemType item)
 			//not root node and is a right child
 			else 
 			{
-				parentNode->right = NULL;
+				parentNode->right = nullptr;
 				delete currentNode;
 				return true;
 			}
@@ -370,7 +383,7 @@ bool BST::deleteValue(ItemType item)
 		else 
 		{
 			//deleted node has a left child
-			if (currentNode->right == NULL && currentNode->left != NULL) 
+			if (currentNode->right == nullptr && currentNode->left != nullptr)
 			{
 				//is deleted node a left child?
 				if (checkLeft) 
@@ -389,7 +402,7 @@ bool BST::deleteValue(ItemType item)
 			}
 
 			//deleted node has a right child
-			else if (currentNode->right != NULL && currentNode->left == NULL) 
+			else if (currentNode->right != nullptr && currentNode->left == nullptr)
 			{
 				if (checkLeft)
 				{
@@ -412,7 +425,7 @@ bool BST::deleteValue(ItemType item)
 				//successor
 				//go all the way to the currentNode's left
 				BTNode* successorNode = currentNode->left;
-				while (successorNode->right != NULL) 
+				while (successorNode->right != nullptr)
 				{
 					successorNode = successorNode->right;
 				}
@@ -448,37 +461,36 @@ void BST::displayKNode(int kNode)
 	Queue testQueue;
 	Queue finalQueue;
 	
-	if (root == NULL) 
+	if (root == nullptr)
 	{
 		std::cout << "There is nothing in the tree.";
 	}
 
 	testQueue.enqueue(root);
-	while (testQueue.isEmpty == false) 
+	while (testQueue.isEmpty() == false) 
 	{
 		BTNode* frontNode;
 		testQueue.dequeue(frontNode);
 		finalQueue.enqueue(frontNode);
 
 		//Enqueue left child
-		if (frontNode->left != NULL) 
+		if (frontNode->left != nullptr)
 		{
 			testQueue.enqueue(frontNode->left);
 		}
 
 		//Enqueue right child
-		if (frontNode->right != NULL) 
+		if (frontNode->right != nullptr)
 		{
 			testQueue.enqueue(frontNode->right);
 		}
 	}
 
-	BTNode* valueNode;
+	BTNode* valueNode = nullptr;
 	for (int i = 1; i <= kNode; i++) 
 	{
 		testQueue.dequeue(valueNode);
 	}
 
-	cout << "The value is: " << valueNode;
+	cout << "The value is: " << valueNode->item << endl;
 }
-
