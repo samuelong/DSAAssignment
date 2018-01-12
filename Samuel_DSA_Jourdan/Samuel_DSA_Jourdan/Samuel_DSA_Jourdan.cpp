@@ -46,7 +46,7 @@ int main()
 		switch (choice)
 		{
 		case 1:
-			std::cout << "Provide a value to search :";
+			std::cout << "Provide a value to search: ";
 			setIntVar(value, "Invalid input. Please provide an Integer\nInput:");
 			if (myBST.search(value))
 			{
@@ -58,7 +58,7 @@ int main()
 			}
 			break;
 		case 2:
-			std::cout << "Provide a value to be added :";
+			std::cout << "Provide a value to be added: ";
 			setIntVar(value, "Invalid input. Please provide an Integer\nInput:");
 			myBST.insert(value);
 			break;
