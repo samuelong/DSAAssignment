@@ -323,8 +323,8 @@ void BST::displaySpaces(int no)
 
 bool BST::deleteValue(ItemType item) 
 {
-	BTNode *currentNode = root;
-	BTNode *parentNode = nullptr;
+	BTNode* currentNode = root;
+	BTNode* parentNode = nullptr;
 	bool checkLeft = false;
 	bool found = false;
 
@@ -341,6 +341,7 @@ bool BST::deleteValue(ItemType item)
 			if (item > currentNode->item) 
 			{
 				currentNode = currentNode->right;
+				checkLeft = false;
 			}
 
 			else 
@@ -357,43 +358,46 @@ bool BST::deleteValue(ItemType item)
 		if (currentNode->right == nullptr && currentNode->left == nullptr)
 		{
 			//check to see if it's the root node being deleted
-			if (currentNode == root) 
+			if (currentNode == root)
 			{
 				delete currentNode;
 				return true;
 			}
 
 			//not root node and is a left child
-			else if (checkLeft) 
-			{
-				parentNode->left = nullptr;
-				delete currentNode;
-				return true;
-			}
-
-			//not root node and is a right child
 			else 
 			{
-				parentNode->right = nullptr;
-				delete currentNode;
-				return true;
+				if (checkLeft)
+				{
+					parentNode->left = nullptr;
+					delete currentNode;
+					return true;
+				}
+
+				//not root node and is a right child
+				else
+				{
+					parentNode->right = nullptr;
+					delete currentNode;
+					return true;
+				}
 			}
 		}
 
-		else 
+		else
 		{
 			//deleted node has a left child
 			if (currentNode->right == nullptr && currentNode->left != nullptr)
 			{
 				//is deleted node a left child?
-				if (checkLeft) 
+				if (checkLeft)
 				{
 					parentNode->left = currentNode->left;
 					delete currentNode;
 					return true;
 				}
 
-				else 
+				else
 				{
 					parentNode->right = currentNode->left;
 					delete currentNode;
@@ -402,39 +406,42 @@ bool BST::deleteValue(ItemType item)
 			}
 
 			//deleted node has a right child
-			else if (currentNode->right != nullptr && currentNode->left == nullptr)
+			else
 			{
-				if (checkLeft)
+				if (currentNode->right != nullptr && currentNode->left == nullptr)
 				{
-					parentNode->left = currentNode->right;
-					delete currentNode;
-					return true;
+					if (checkLeft)
+					{
+						parentNode->left = currentNode->right;
+						delete currentNode;
+						return true;
+					}
+
+					else
+					{
+						parentNode->right = currentNode->right;
+						delete currentNode;
+						return true;
+					}
 				}
 
-				else 
+				//deleted node has two children
+				else
 				{
-					parentNode->right = currentNode->left;
-					delete currentNode;
-					return true;
+					//successor
+					//go all the way to the currentNode's left
+					BTNode* successorNode = currentNode->left;
+					while (successorNode->right != nullptr)
+					{
+						successorNode = successorNode->right;
+					}
+					//store the successor's value
+					int valueSuccessor = successorNode->item;
+					//remove the successor
+					deleteValue(valueSuccessor);
+					//replace the value in the successorNode with the currentNode
+					currentNode->item = valueSuccessor;
 				}
-			}
-
-			//deleted node has two children
-			else 
-			{
-				//successor
-				//go all the way to the currentNode's left
-				BTNode* successorNode = currentNode->left;
-				while (successorNode->right != nullptr)
-				{
-					successorNode = successorNode->right;
-				}
-				//store the successor's value
-				int valueSuccessor = successorNode->item;
-				//remove the successor
-				delete successorNode;
-				//replace the value in the successorNode with the currentNode
-				currentNode->item = valueSuccessor;
 			}
 		}
 	}
