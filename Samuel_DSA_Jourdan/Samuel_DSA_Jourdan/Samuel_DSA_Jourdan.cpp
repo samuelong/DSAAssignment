@@ -36,7 +36,7 @@ int main()
 			myBST.displayBT();
 			break;
 		case 2:
-			cout << "Provide a value to be added :";
+			cout << "Provide a value to be added: ";
 			int value;
 			cin >> value;
 			myBST.insert(value);
