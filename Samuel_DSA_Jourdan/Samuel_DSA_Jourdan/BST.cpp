@@ -447,57 +447,56 @@ bool BST::deleteValue(ItemType item)
 	}
 }
 
-void BST::displayItemAsc() 
+void BST::displayAsc() 
 {
 	displayItemAsc(root);
 }
 
 void BST::displayItemAsc(BTNode* node) 
 {
-	BTNode* currentNode = root;
-	if (currentNode->item != NULL) 
+	if (node != NULL) 
 	{
-		displayItemAsc(currentNode->left);
-		cout << currentNode->item << endl;
-		displayItemAsc(currentNode->right);
+		displayItemAsc(node->left);
+		cout << node->item << endl;
+		displayItemAsc(node->right);
 	}
 }
 
 void BST::displayKNode(int kNode) 
 {
-	Queue testQueue;
-	Queue finalQueue;
+	Queue* testQueue = new Queue();
+	Queue* finalQueue = new Queue();
 	
 	if (root == nullptr)
 	{
-		std::cout << "There is nothing in the tree.";
+		std::cout << "There is nothing in the tree";
 	}
 
-	testQueue.enqueue(root);
-	while (testQueue.isEmpty() == false) 
+	testQueue->enqueue(root);
+	while (testQueue->isEmpty() == false) 
 	{
-		BTNode* frontNode;
-		testQueue.dequeue(frontNode);
-		finalQueue.enqueue(frontNode);
+		BTNode* node = NULL;
+		testQueue->dequeue(node);
+		finalQueue->enqueue(node);
 
 		//Enqueue left child
-		if (frontNode->left != nullptr)
+		if (node->left != nullptr)
 		{
-			testQueue.enqueue(frontNode->left);
+			testQueue->enqueue(node->left);
 		}
 
 		//Enqueue right child
-		if (frontNode->right != nullptr)
+		if (node->right != nullptr)
 		{
-			testQueue.enqueue(frontNode->right);
+			testQueue->enqueue(node->right);
 		}
 	}
 
-	BTNode* valueNode = nullptr;
-	for (int i = 1; i <= kNode; i++) 
+	BTNode* value = NULL;
+	for (int i = 0; i <= kNode - 1; i++) 
 	{
-		testQueue.dequeue(valueNode);
+		finalQueue->dequeue(value);
 	}
 
-	cout << "The value is: " << valueNode->item << endl;
+	cout << "The value is: " << value->item << endl;
 }

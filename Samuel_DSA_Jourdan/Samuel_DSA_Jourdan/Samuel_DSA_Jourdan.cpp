@@ -69,7 +69,7 @@ int main()
 			myBST.deleteValue(nodeDelete);
 			break;
 		case 4:
-			myBST.displayItemAsc();
+			myBST.displayAsc();
 			break;
 		case 5:
 			int nodeIndex;
