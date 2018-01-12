@@ -41,6 +41,10 @@ bool Queue::deleteItem()
 			backNode = nullptr;
 		}
 		frontNode = frontNode->next;
+		if (tempptr->item->item == NULL)
+		{
+			delete tempptr->item;
+		}
 		delete tempptr;
 		return true;
 	}
@@ -58,6 +62,7 @@ bool Queue::dequeue(ItemType* &item)
 		}
 		frontNode = frontNode->next;
 		item = tempptr->item;
+		delete tempptr;
 		return true;
 	}
 	return false;}

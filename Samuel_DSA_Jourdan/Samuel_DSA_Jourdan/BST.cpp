@@ -454,7 +454,7 @@ void BST::displayAsc()
 
 void BST::displayItemAsc(BTNode* node) 
 {
-	if (node != NULL) 
+	if (node != nullptr) 
 	{
 		displayItemAsc(node->left);
 		cout << node->item << endl;
@@ -475,7 +475,7 @@ void BST::displayKNode(int kNode)
 	testQueue->enqueue(root);
 	while (testQueue->isEmpty() == false) 
 	{
-		BTNode* node = NULL;
+		BTNode* node = nullptr;
 		testQueue->dequeue(node);
 		finalQueue->enqueue(node);
 
@@ -492,11 +492,13 @@ void BST::displayKNode(int kNode)
 		}
 	}
 
-	BTNode* value = NULL;
+	BTNode* value = nullptr;
 	for (int i = 0; i <= kNode - 1; i++) 
 	{
 		finalQueue->dequeue(value);
 	}
 
 	cout << "The value is: " << value->item << endl;
+	delete finalQueue;
+	delete testQueue;
 }

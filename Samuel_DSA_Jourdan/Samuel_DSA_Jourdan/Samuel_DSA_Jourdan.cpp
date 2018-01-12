@@ -69,13 +69,13 @@ int main()
 			myBST.deleteValue(nodeDelete);
 			break;
 		case 4:
-			myBST.displayAsc();
+			myBST.displayAsc();//memory leak?
 			break;
 		case 5:
 			int nodeIndex;
 			std::cout << "Enter your index: ";
 			setIntVar(nodeIndex, "Invalid input. Please provide an index(Integer)\nInput:");
-			myBST.displayKNode(nodeIndex);
+			myBST.displayKNode(nodeIndex);//Memory leak
 			break;
 		case 6:
 			myBST.displayBT();
