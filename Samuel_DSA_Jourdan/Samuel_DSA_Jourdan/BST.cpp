@@ -341,6 +341,7 @@ bool BST::deleteValue(ItemType item)
 			if (item > currentNode->item) 
 			{
 				currentNode = currentNode->right;
+				checkLeft = false;
 			}
 
 			else 
@@ -359,7 +360,8 @@ bool BST::deleteValue(ItemType item)
 			//check to see if it's the root node being deleted
 			if (currentNode == root)
 			{
-				root = NULL;
+				root = nullptr;
+				delete currentNode;
 				return true;
 			}
 
@@ -369,6 +371,7 @@ bool BST::deleteValue(ItemType item)
 				if (checkLeft)
 				{
 					parentNode->left = nullptr;
+					delete currentNode;
 					return true;
 				}
 
@@ -376,6 +379,7 @@ bool BST::deleteValue(ItemType item)
 				else
 				{
 					parentNode->right = nullptr;
+					delete currentNode;
 					return true;
 				}
 			}
@@ -398,12 +402,14 @@ bool BST::deleteValue(ItemType item)
 					if (checkLeft)
 					{
 						parentNode->left = currentNode->right;
+						delete currentNode;
 						return true;
 					}
 
 					else
 					{
 						parentNode->right = currentNode->right;
+						delete currentNode;
 						return true;
 					}
 				}
@@ -427,12 +433,14 @@ bool BST::deleteValue(ItemType item)
 						if (checkLeft)
 						{
 							parentNode->left = currentNode->left;
+							delete currentNode;
 							return true;
 						}
 
 						else
 						{
 							parentNode->right = currentNode->left;
+							delete currentNode;
 							return true;
 						}
 					}
