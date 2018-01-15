@@ -24,8 +24,11 @@ int main()
 {
 	std::cout << "Welcome to the Binary Search Tree Creator Application\n";
 	std::cout << "Please provide a positive number for the creation of the BST: ";
-	int num;
-	setIntVar(num, "Invalid input. Please provide a proper input value (Integer)\nInput:");
+	int num = -1;
+	while (num < 0)
+	{
+		setIntVar(num, "Invalid input. Please provide a proper input value (Integer)\nInput:");
+	}
 	//Create BST.
 	BST myBST = BST();
 	myBST.populateAVLBT(num);
@@ -48,14 +51,7 @@ int main()
 		case 1:
 			std::cout << "Provide a value to search: ";
 			setIntVar(value, "Invalid input. Please provide an Integer\nInput:");
-			if (myBST.search(value))
-			{
-				std::cout << "Value found in Binary Tree\n";
-			}
-			else
-			{
-				std::cout << "Value not found in Binary Tree\n";
-			}
+			myBST.search(value);
 			break;
 		case 2:
 			std::cout << "Provide a value to be added: ";
@@ -69,13 +65,13 @@ int main()
 			myBST.deleteValue(nodeDelete);
 			break;
 		case 4:
-			myBST.displayAsc();//memory leak?
+			myBST.displayAsc();
 			break;
 		case 5:
 			int nodeIndex;
 			std::cout << "Enter your index: ";
 			setIntVar(nodeIndex, "Invalid input. Please provide an index(Integer)\nInput:");
-			myBST.displayKNode(nodeIndex);//Memory leak
+			myBST.displayKNode(nodeIndex);
 			break;
 		case 6:
 			myBST.displayBT();

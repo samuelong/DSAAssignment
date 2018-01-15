@@ -26,36 +26,56 @@ void BST::populateAVLBT(int sum)
 		current++;
 	}}
 
-bool BST::search(ItemType item)
+void BST::search(ItemType item)
 {
-	if (search(root, item) != nullptr)
+	string str = search(root, item);
+	if (str == "")
 	{
-		return true;
+		cout << "Value not found in Binary Tree\n";
 	}
 	else
 	{
-		return false;
+		cout << str << endl;
 	}
 }
 
-BTNode* BST::search(BTNode* node, ItemType item)
+string BST::search(BTNode* node, ItemType item)
 {
+	if (node == root)
+	{
+		if (root->item == item)
+		{
+			return "Root";
+		}
+	}
 	if (node != nullptr)
 	{
-		if (item == node->item)
+		string str = "";
+		if (node->item == item)
 		{
-			return node;
+			return "<- Path to Value";
 		}
-		if (item < node->item)
+		else if (node->item < item)
 		{
-			return search(node->left, item);
+			str = "R|" + search(node->right, item);
 		}
 		else
 		{
-			return search(node->right, item);
+			str = "L|" + search(node->left, item);
+		}
+		if (str == "")
+		{
+			return "";
+		}
+		else
+		{
+			return str;
 		}
 	}
-	return nullptr;
+	else
+	{
+		return "";
+	}
 }
 
 void BST::insert(ItemType item)
@@ -491,34 +511,36 @@ void BST::displayKNode(int kNode)
 	{
 		std::cout << "There is nothing in the tree";
 	}
-
-	testQueue->enqueue(root);
-	while (testQueue->isEmpty() == false) 
+	else
 	{
-		BTNode* node = nullptr;
-		testQueue->dequeue(node);
-		finalQueue->enqueue(node);
-
-		//Enqueue left child
-		if (node->left != nullptr)
+		testQueue->enqueue(root);
+		while (testQueue->isEmpty() == false)
 		{
-			testQueue->enqueue(node->left);
+			BTNode* node = nullptr;
+			testQueue->dequeue(node);
+			finalQueue->enqueue(node);
+
+			//Enqueue left child
+			if (node->left != nullptr)
+			{
+				testQueue->enqueue(node->left);
+			}
+
+			//Enqueue right child
+			if (node->right != nullptr)
+			{
+				testQueue->enqueue(node->right);
+			}
 		}
 
-		//Enqueue right child
-		if (node->right != nullptr)
+		BTNode* value = nullptr;
+		for (int i = 0; i <= kNode - 1; i++)
 		{
-			testQueue->enqueue(node->right);
+			finalQueue->dequeue(value);
 		}
-	}
 
-	BTNode* value = nullptr;
-	for (int i = 0; i <= kNode - 1; i++) 
-	{
-		finalQueue->dequeue(value);
+		cout << "The value is: " << value->item << endl;
 	}
-
-	cout << "The value is: " << value->item << endl;
 	delete finalQueue;
 	delete testQueue;
 }
