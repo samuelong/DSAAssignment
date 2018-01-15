@@ -64,7 +64,8 @@ public:
 	//Search for the BTNode based on item
 	void search(ItemType item);
 	//Deletes the BTNode based on item
-	bool deleteValue(ItemType item);
+	void userDeleteValue(ItemType item);
+	bool deleteValue(BTNode* node, ItemType item);
 	//Display all items in Ascending order
 	void displayAsc();
 	void displayItemAsc(BTNode* node);
