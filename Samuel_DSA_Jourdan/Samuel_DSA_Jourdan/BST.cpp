@@ -321,150 +321,116 @@ void BST::displaySpaces(int no)
 	}
 }
 
-bool BST::deleteValue(ItemType item) 
+void BST::userDeleteValue(ItemType item) 
 {
-	BTNode* currentNode = root;
-	BTNode* parentNode = nullptr;
-	bool checkLeft = false;
-	bool found = false;
+	deleteValue(root, item);
+}
 
-	while ((!found) && (currentNode != nullptr))
+bool BST::deleteValue(BTNode* node, ItemType item)
+{
+	BTNode* parentNode = node;
+	if (node->item == item) // check to see if it's a root
 	{
-		if (item == currentNode->item) 
-		{
-			found = true;
-		}
-
-		else 
-		{
-			parentNode = currentNode;
-			if (item > currentNode->item) 
-			{
-				currentNode = currentNode->right;
-				checkLeft = false;
-			}
-
-			else 
-			{
-				currentNode = currentNode->left;
-				checkLeft = true;
-			}
-		}
+		delete parentNode;
 	}
 
-	if (found) 
+	else 
 	{
-		//if the deleted node has no children
-		if (currentNode->right == nullptr && currentNode->left == nullptr)
+		if (parentNode->item > item)
 		{
-			//check to see if it's the root node being deleted
-			if (currentNode == root)
+			if (parentNode->left->item == item)
 			{
-				root = nullptr;
-				delete currentNode;
-				return true;
-			}
-
-			//not root node and is a left child
-			else 
-			{
-				if (checkLeft)
+				BTNode* deleteNode = parentNode->left;
+				if (deleteNode->left == nullptr && deleteNode->right == nullptr)
 				{
 					parentNode->left = nullptr;
-					delete currentNode;
-					return true;
+					delete deleteNode;
 				}
 
-				//not root node and is a right child
+				else if (deleteNode->left != nullptr && deleteNode->right == nullptr)
+				{
+					parentNode->left = parentNode->left->left;
+					delete deleteNode;
+					parentNode->left = avlRotate(parentNode->left);
+				}
+
+				else if (deleteNode->left == nullptr && deleteNode->right != nullptr)
+				{
+					parentNode->left = parentNode->left->right;
+					delete deleteNode;
+					parentNode->left = avlRotate(parentNode->left);
+				}
+
 				else
 				{
-					parentNode->right = nullptr;
-					delete currentNode;
-					return true;
+					BTNode* successorNode = deleteNode->left;
+					while (successorNode->right != nullptr)
+					{
+						successorNode = successorNode->right;
+					}
+					int valueSuccessor = successorNode->item;
+					deleteValue(deleteNode, valueSuccessor);
+					deleteNode->item = valueSuccessor;
+					parentNode->left = avlRotate(parentNode->left);
 				}
+				
+			}
+
+			else
+			{
+				deleteValue(parentNode->left, item);
+				
 			}
 		}
 
 		else
 		{
-			//deleted node has a left child
-			if (currentNode->left == nullptr)
+			if (parentNode->right->item == item)
 			{
-				if (currentNode == root)
+				BTNode* deleteNode = parentNode->right;
+				if (deleteNode->left == nullptr && deleteNode->right == nullptr)
 				{
-					currentNode->item = currentNode->right->item;
-					currentNode->right = nullptr;
-					return true;
+					parentNode->right = nullptr;
+					delete deleteNode;
 				}
 
-				else 
+				else if (deleteNode->left != nullptr && deleteNode->right == nullptr)
 				{
-					if (checkLeft)
-					{
-						parentNode->left = currentNode->right;
-						delete currentNode;
-						return true;
-					}
-
-					else
-					{
-						parentNode->right = currentNode->right;
-						delete currentNode;
-						return true;
-					}
-				}
-				//is deleted node a left child?
-			}
-
-			//deleted node has a right child
-			else
-			{
-				if (currentNode->right == nullptr)
-				{
-					if (currentNode == root)
-					{
-						currentNode->item = currentNode->left->item;
-						currentNode->left = nullptr;
-						return true;
-					}
-					
-					else 
-					{
-						if (checkLeft)
-						{
-							parentNode->left = currentNode->left;
-							delete currentNode;
-							return true;
-						}
-
-						else
-						{
-							parentNode->right = currentNode->left;
-							delete currentNode;
-							return true;
-						}
-					}
+					parentNode->right = parentNode->right->left;
+					delete deleteNode;
+					parentNode->right = avlRotate(parentNode->right);
 				}
 
-				//deleted node has two children
+				else if (deleteNode->left == nullptr && deleteNode->right != nullptr)
+				{
+					parentNode->right = parentNode->right->right;
+					delete deleteNode;
+					parentNode->right = avlRotate(parentNode->right);
+				}
+
 				else
 				{
-					//go all the way to the currentNode's left
-					BTNode* successorNode = currentNode->left;
+					BTNode* successorNode = deleteNode->left;
 					while (successorNode->right != nullptr)
 					{
 						successorNode = successorNode->right;
 					}
-					//store the successor's value
 					int valueSuccessor = successorNode->item;
-					//remove the successor
-					deleteValue(valueSuccessor);
-					//replace the value in the successorNode with the currentNode
-					currentNode->item = valueSuccessor;
+					deleteValue(deleteNode, valueSuccessor);
+					deleteNode->item = valueSuccessor;
+					parentNode->right = avlRotate(parentNode->right);
 				}
+				
+			}
+
+			else
+			{
+				deleteValue(parentNode->right, item);
 			}
 		}
 	}
+	parentNode = avlRotate(parentNode);
+	return true;
 }
 
 void BST::displayAsc() 
