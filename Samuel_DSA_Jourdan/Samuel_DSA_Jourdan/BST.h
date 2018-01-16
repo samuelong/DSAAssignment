@@ -22,7 +22,7 @@ private:
 	//Returns the BTNode by Index
 	BTNode getNode(int nodeIndex);
 	//Search for the BTNode based on item
-	BTNode* search(BTNode* node, ItemType item);
+	string search(BTNode* node, ItemType item);
 	//Get Node Height
 	int getHeight(BTNode* node);
 	//Check if Root Node is balanced
@@ -68,7 +68,7 @@ public:
 	//Populate AVL BT by SUM of Nodes be larger or equal to Parameter at minimum
 	void populateAVLBT(int sum);
 	//Search for the BTNode based on item
-	bool search(ItemType item);
+	void search(ItemType item);
 	//Deletes the BTNode based on item
 	void deleteValue(ItemType item);
 	//Display all items in Ascending order
