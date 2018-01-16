@@ -66,7 +66,7 @@ int main()
 			int nodeDelete;
 			std::cout << "Enter value to be deleted: ";
 			setIntVar(nodeDelete, "Invalid input. Please provide an Integer\nInput:");
-			myBST.userDeleteValue(nodeDelete);
+			myBST.deleteValue(nodeDelete);
 			break;
 		case 4:
 			myBST.displayAsc();//memory leak?

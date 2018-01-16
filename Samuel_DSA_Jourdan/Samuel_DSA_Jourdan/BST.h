@@ -47,6 +47,12 @@ private:
 	BTNode* rotateRightLeft(BTNode* node);
 	//Display spaces
 	void displaySpaces(int no);
+	//Display the Binary Tree
+	void displayBT(BTNode* node);
+	//Display the values in ascending order
+	void displayAsc(BTNode* node);
+	//Deletes a value
+	bool deleteValue(BTNode* node, ItemType item);
 
 public:
 
@@ -64,14 +70,11 @@ public:
 	//Search for the BTNode based on item
 	bool search(ItemType item);
 	//Deletes the BTNode based on item
-	void userDeleteValue(ItemType item);
-	bool deleteValue(BTNode* node, ItemType item);
+	void deleteValue(ItemType item);
 	//Display all items in Ascending order
 	void displayAsc();
-	void displayItemAsc(BTNode* node);
 	//Display the kth node
 	void displayKNode(int kNode);
 	//Display the Binary Tree
 	void displayBT();
-	void displayBT(BTNode* node);
 };

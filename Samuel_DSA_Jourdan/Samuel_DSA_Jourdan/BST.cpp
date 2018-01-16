@@ -321,7 +321,7 @@ void BST::displaySpaces(int no)
 	}
 }
 
-void BST::userDeleteValue(ItemType item) 
+void BST::deleteValue(ItemType item) 
 {
 	deleteValue(root, item);
 }
@@ -333,7 +333,6 @@ bool BST::deleteValue(BTNode* node, ItemType item)
 	{
 		delete parentNode;
 	}
-
 	else 
 	{
 		if (parentNode->item > item)
@@ -435,16 +434,16 @@ bool BST::deleteValue(BTNode* node, ItemType item)
 
 void BST::displayAsc() 
 {
-	displayItemAsc(root);
+	displayAsc(root);
 }
 
-void BST::displayItemAsc(BTNode* node) 
+void BST::displayAsc(BTNode* node) 
 {
 	if (node != nullptr) 
 	{
-		displayItemAsc(node->left);
+		displayAsc(node->left);
 		cout << node->item << endl;
-		displayItemAsc(node->right);
+		displayAsc(node->right);
 	}
 }
 
