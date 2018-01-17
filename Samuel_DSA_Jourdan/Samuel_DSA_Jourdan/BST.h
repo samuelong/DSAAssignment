@@ -52,7 +52,7 @@ private:
 	//Display the values in ascending order
 	void displayAsc(BTNode* node);
 	//Deletes a value
-	bool deleteValue(BTNode* node, ItemType item);
+	bool deleteValue(BTNode* &node, ItemType item);
 
 public:
 

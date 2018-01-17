@@ -152,7 +152,6 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="BinaryNode.cpp" />
     <ClCompile Include="BST.cpp" />
     <ClCompile Include="Queue.cpp" />
     <ClCompile Include="Samuel_DSA_Jourdan.cpp" />
