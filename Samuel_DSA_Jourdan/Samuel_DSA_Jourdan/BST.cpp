@@ -41,6 +41,10 @@ void BST::search(ItemType item)
 
 string BST::search(BTNode* node, ItemType item)
 {
+	if (root == nullptr)
+	{
+		return "Tree is Empty";
+	}
 	if (node == root)
 	{
 		if (root->item == item)
@@ -161,19 +165,14 @@ BTNode* BST::avlRotate(BTNode* node)
 	{
 		balance = BST::balance(node->left);
 		//Left SubTree - Right Heavy
-		if (balance > 1)
+		if (balance >= 1)
 		{
 			return rotateLeftRight(node);
 		}
 		//Left SubTree - Left Heavy
-		else if (balance < -1)
+		else
 		{
 			return rotateRight(node);
-		}
-		//Left SubTree - Right 1 Node
-		else if (balance == 1)
-		{
-			return rotateLeftRight(node);
 		}
 	}
 	//Main Tree - Right Heavy
@@ -181,17 +180,13 @@ BTNode* BST::avlRotate(BTNode* node)
 	{
 		balance = BST::balance(node->right);
 		//Right SubTree - Left Heavy
-		if (balance < -1)
+		if (balance <= -1)
 		{
 			return rotateRightLeft(node);
 		}
-		else if (balance > 1)
+		else
 		{
 			return rotateLeft(node);
-		}
-		else if (balance == -1)
-		{
-			return rotateRightLeft(node);
 		}
 	}
 	return node;
@@ -286,7 +281,14 @@ Queue* BST::getLevelByLevel(BTNode* node)
 
 void BST::displayBT()
 {
-	displayBT(root);
+	if (root == nullptr)
+	{
+		cout << "Tree is empty\n";
+	}
+	else
+	{
+		displayBT(root);
+	}
 }
 
 void BST::displayBT(BTNode* node)
@@ -355,7 +357,14 @@ void BST::displaySpaces(int no)
 
 void BST::deleteValue(ItemType item) 
 {
-	deleteValue(root, item);
+	if (root != nullptr)
+	{
+		deleteValue(root, item);
+	}
+	else
+	{
+		cout << "Tree is Empty\n";
+	}
 }
 
 bool BST::deleteValue(BTNode* &node, ItemType item)
@@ -495,7 +504,14 @@ bool BST::deleteValue(BTNode* &node, ItemType item)
 
 void BST::displayAsc() 
 {
-	displayAsc(root);
+	if (root == nullptr)
+	{
+		cout << "Tree is empty\n";
+	}
+	else
+	{
+		displayAsc(root);
+	}
 }
 
 void BST::displayAsc(BTNode* node) 
@@ -515,7 +531,7 @@ void BST::displayKNode(int kNode)
 	
 	if (root == nullptr)
 	{
-		std::cout << "There is nothing in the tree";
+		std::cout << "Tree is empty\n";
 	}
 	else
 	{
