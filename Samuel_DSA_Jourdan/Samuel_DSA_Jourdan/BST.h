@@ -25,10 +25,6 @@ private:
 	string search(BTNode* node, ItemType item);
 	//Get Node Height
 	int getHeight(BTNode* node);
-	//Check if Root Node is balanced
-	bool isBalance();
-	//Check if Node is balanced
-	bool isBalance(BTNode* node);
 	//Count the number of nodes
 	int countNode(BTNode* node);
 	//Get Level By Level Queue of BT

@@ -138,31 +138,13 @@ int BST::getHeight(BTNode* node)
 	return 1 + max(getHeight(node->left), getHeight(node->right));
 }
 
-bool BST::isBalance()
-{
-	if (root != nullptr)
-	{
-		return isBalance(root);
-	}
-}
-
-bool BST::isBalance(BTNode* node)
-{
-	if (node != nullptr)
-	{
-		if (abs(getHeight(node->left) - getHeight(node->right)) <= 1)
-		{
-			return true;
-		}
-	}
-}
-
 int BST::balance(BTNode* node)
 {
 	if (node != nullptr)
 	{
 		return getHeight(node->right) - getHeight(node->left);
 	}
+	return NULL;
 }
 
 BTNode* BST::avlRotate(BTNode* node)
@@ -285,6 +267,7 @@ Queue* BST::getLevelByLevel(BTNode* node)
 		delete tempQ;
 		return q;
 	}
+	return nullptr;
 }
 
 void BST::displayBT()
