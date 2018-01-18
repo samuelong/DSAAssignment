@@ -42,8 +42,8 @@ int main()
 		std::cout << "1: Search for a value\n";
 		std::cout << "2: Add a value\n";
 		std::cout << "3: Remove a value\n";
-		std::cout << "4: Display values in Ascending order\n";
-		std::cout << "5: Display the value in a specific Node by index using Level By Level Traversal\n";
+		std::cout << "4: Display values in ascending order\n";
+		std::cout << "5: Display the node by index (from top to bottom)\n";
 		std::cout << "6: Display the Binary Tree\n";
 		std::cout << "0: Exit\n";
 		std::cout << "Input: ";
@@ -53,18 +53,18 @@ int main()
 		{
 		case 1:
 			std::cout << "Provide a value to search: ";
-			setIntVar(value, "Invalid input. Please provide an Integer\nInput:");
+			setIntVar(value, "Invalid input. Please provide an Integer\nInput: ");
 			myBST.search(value);
 			break;
 		case 2:
 			std::cout << "Provide a value to be added: ";
-			setIntVar(value, "Invalid input. Please provide an Integer\nInput:");
+			setIntVar(value, "Invalid input. Please provide an Integer\nInput: ");
 			myBST.insert(value);
 			break;
 		case 3:
 			int nodeDelete;
 			std::cout << "Enter value to be deleted: ";
-			setIntVar(nodeDelete, "Invalid input. Please provide an Integer\nInput:");
+			setIntVar(nodeDelete, "Invalid input. Please provide an Integer\nInput: ");
 			myBST.deleteValue(nodeDelete);
 			break;
 		case 4:
@@ -73,7 +73,7 @@ int main()
 		case 5:
 			int nodeIndex;
 			std::cout << "Enter your index: ";
-			setIntVar(nodeIndex, "Invalid input. Please provide an index(Integer)\nInput:");
+			setIntVar(nodeIndex, "Invalid input. Please provide an index(Integer)\nInput: ");
 			myBST.displayKNode(nodeIndex);
 			break;
 		case 6:
@@ -82,7 +82,7 @@ int main()
 		case 0:
 			break;
 		default:
-			std::cout << "Please provide a valid input that is indicated";
+			std::cout << "Please choose one of the options displayed";
 			choice = -1;
 			break;
 		}
