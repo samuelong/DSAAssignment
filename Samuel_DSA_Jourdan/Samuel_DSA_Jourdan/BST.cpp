@@ -519,7 +519,8 @@ void BST::displayKNode(int kNode)
 {
 	Queue* testQueue = new Queue();
 	Queue* finalQueue = new Queue();
-	
+	int count = 0;
+
 	if (root == nullptr)
 	{
 		std::cout << "Tree is empty\n";
@@ -532,6 +533,7 @@ void BST::displayKNode(int kNode)
 			BTNode* node = nullptr;
 			testQueue->dequeue(node);
 			finalQueue->enqueue(node);
+			count++;
 
 			//Enqueue left child
 			if (node->left != nullptr)
@@ -547,12 +549,19 @@ void BST::displayKNode(int kNode)
 		}
 
 		BTNode* value = nullptr;
-		for (int i = 0; i <= kNode - 1; i++)
+		if (kNode > count) 
 		{
-			finalQueue->dequeue(value);
+			std::cout << "The node doesn't exist" << endl;
 		}
 
-		cout << "The value is: " << value->item << endl;
+		else 
+		{
+			for (int i = 0; i <= kNode - 1; i++)
+			{
+				finalQueue->dequeue(value);
+			}
+			cout << "The value is: " << value->item << endl;
+		}
 	}
 	delete finalQueue;
 	delete testQueue;
