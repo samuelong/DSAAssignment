@@ -41,10 +41,6 @@ void BST::search(ItemType item)
 
 string BST::search(BTNode* node, ItemType item)
 {
-	if (root == nullptr)
-	{
-		return "Tree is Empty";
-	}
 	if (node == root)
 	{
 		if (root->item == item)
@@ -52,7 +48,11 @@ string BST::search(BTNode* node, ItemType item)
 			return "Root";
 		}
 	}
-	if (node != nullptr)
+	if (root == nullptr)
+	{
+		return "Tree is Empty";
+	}
+	else if (node != nullptr)
 	{
 		string str = "";
 		if (node->item == item)
@@ -61,11 +61,19 @@ string BST::search(BTNode* node, ItemType item)
 		}
 		else if (node->item < item)
 		{
-			str = "R|" + search(node->right, item);
+			str = search(node->right, item);
+			if (str != "")
+			{
+				str = "R|" + str;
+			}
 		}
 		else
 		{
-			str = "L|" + search(node->left, item);
+			str = search(node->left, item);
+			if (str != "")
+			{
+				str = "L|" + str;
+			}
 		}
 		if (str == "")
 		{

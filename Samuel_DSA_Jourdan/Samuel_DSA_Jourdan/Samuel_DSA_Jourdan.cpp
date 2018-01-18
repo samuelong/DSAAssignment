@@ -18,15 +18,17 @@ void setIntVar(int &var, string output)
 		std::cin.ignore(256, '\n');
 		std::cin >> var;
 	}
+	std::cin.clear();
+	std::cin.ignore(256, '\n');
 }
 
 int main()
 {
 	std::cout << "Welcome to the Binary Search Tree Creator Application\n";
-	std::cout << "Please provide a positive number for the creation of the BST: ";
 	int num = -1;
 	while (num < 0)
 	{
+		std::cout << "Please provide a positive number for the creation of the BST: ";
 		setIntVar(num, "Invalid input. Please provide a proper input value (Integer)\nInput:");
 	}
 	//Create BST.
