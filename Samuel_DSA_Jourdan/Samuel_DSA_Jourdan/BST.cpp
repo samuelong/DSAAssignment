@@ -147,7 +147,7 @@ int BST::balance(BTNode* node)
 	return NULL;
 }
 
-BTNode* BST::avlRotate(BTNode* node)
+BTNode* BST::avlRotate(BTNode* &node)
 {
 	int balance = BST::balance(node);
 	//Main Tree - Left Heavy
@@ -360,9 +360,9 @@ void BST::deleteValue(ItemType item)
 
 bool BST::deleteValue(BTNode* &node, ItemType item)
 {
+	BTNode* deleteNode = node;
 	if (node->item == item) // check to see if it's a root
 	{
-		BTNode* deleteNode = node;
 			if (node->left == nullptr && node->right == nullptr)
 			{
 				delete node;
@@ -401,7 +401,7 @@ bool BST::deleteValue(BTNode* &node, ItemType item)
 		{
 			if (node->left->item == item)
 			{
-				BTNode* deleteNode = node->left;
+				deleteNode = node->left;
 				if (deleteNode->left == nullptr && deleteNode->right == nullptr)
 				{
 					node->left = nullptr;
@@ -447,7 +447,7 @@ bool BST::deleteValue(BTNode* &node, ItemType item)
 		{
 			if (node->right->item == item)
 			{
-				BTNode* deleteNode = node->right;
+				deleteNode = node->right;
 				if (deleteNode->left == nullptr && deleteNode->right == nullptr)
 				{
 					node->right = nullptr;

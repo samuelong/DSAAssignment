@@ -32,7 +32,7 @@ private:
 	//Returns the height difference between 2 subtrees under the main tree
 	int balance(BTNode* node);
 	//Does Rotation if required.
-	BTNode* avlRotate(BTNode* node);
+	BTNode* avlRotate(BTNode* &node);
 	//RotateLeft
 	BTNode* rotateLeft(BTNode* node);
 	//RotateRight
