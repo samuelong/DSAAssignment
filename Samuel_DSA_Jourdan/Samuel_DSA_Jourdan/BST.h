@@ -32,15 +32,15 @@ private:
 	//Returns the height difference between 2 subtrees under the main tree
 	int balance(BTNode* node);
 	//Does Rotation if required.
-	BTNode* avlRotate(BTNode* &node);
+	void avlRotate(BTNode* &node);
 	//RotateLeft
-	BTNode* rotateLeft(BTNode* node);
+	void rotateLeft(BTNode* &node);
 	//RotateRight
-	BTNode* rotateRight(BTNode* node);
+	void rotateRight(BTNode* &node);
 	//RotateLeft-Right
-	BTNode* rotateLeftRight(BTNode* node);
+	void rotateLeftRight(BTNode* &node);
 	//RotateRight-Left
-	BTNode* rotateRightLeft(BTNode* node);
+	void rotateRightLeft(BTNode* &node);
 	//Display spaces
 	void displaySpaces(int no);
 	//Display the Binary Tree

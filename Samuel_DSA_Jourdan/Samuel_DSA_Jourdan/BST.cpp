@@ -116,7 +116,7 @@ BTNode* BST::avlAdd(BTNode* &node, ItemType item)
 		if (item < node->item)
 		{
 			temp = avlAdd(node->left, item);
-			node = avlRotate(node);
+			avlRotate(node);
 			return temp;
 		}
 		else if (item == node->item)
@@ -126,7 +126,7 @@ BTNode* BST::avlAdd(BTNode* &node, ItemType item)
 		else
 		{
 			temp = avlAdd(node->right, item);
-			node = avlRotate(node);
+			avlRotate(node);
 			return temp;
 		}
 	}
@@ -150,7 +150,7 @@ int BST::balance(BTNode* node)
 	return NULL;
 }
 
-BTNode* BST::avlRotate(BTNode* &node)
+void BST::avlRotate(BTNode* &node)
 {
 	int balance = BST::balance(node);
 	//Main Tree - Left Heavy
@@ -160,12 +160,12 @@ BTNode* BST::avlRotate(BTNode* &node)
 		//Left SubTree - Right Heavy
 		if (balance >= 1)
 		{
-			return rotateLeftRight(node);
+			rotateLeftRight(node);
 		}
 		//Left SubTree - Left Heavy
 		else
 		{
-			return rotateRight(node);
+			rotateRight(node);
 		}
 	}
 	//Main Tree - Right Heavy
@@ -175,44 +175,51 @@ BTNode* BST::avlRotate(BTNode* &node)
 		//Right SubTree - Left Heavy
 		if (balance <= -1)
 		{
-			return rotateRightLeft(node);
+			rotateRightLeft(node);
 		}
 		else
 		{
-			return rotateLeft(node);
+			rotateLeft(node);
 		}
 	}
-	return node;
 }
 
-BTNode* BST::rotateLeft(BTNode* node)
+void BST::rotateLeft(BTNode* &node)
 {
-	BTNode* nodeC = node->right;
-	node->right = nodeC->left;
-	nodeC->left = node;
-	return nodeC;
+	BTNode* temp = node;
+	BTNode* nodeC = temp->right;
+	temp->right = nodeC->left;
+	nodeC->left = temp;
+	node = nodeC;
 }
 
-BTNode* BST::rotateRight(BTNode* node)
+void BST::rotateRight(BTNode* &node)
 {
-	BTNode* nodeC = node->left;
-	node->left = nodeC->right;
-	nodeC->right = node;
-	return nodeC;
+	BTNode* temp = node;
+	BTNode* nodeC = temp->left;
+	temp->left = nodeC->right;
+	nodeC->right = temp;
+	node = nodeC;
 }
 
-BTNode* BST::rotateLeftRight(BTNode* node)
+void BST::rotateLeftRight(BTNode* &node)
 {
-	BTNode* nodeC = node->left;
-	node->left = rotateLeft(nodeC);
-	return rotateRight(node);
+	BTNode* temp = node;
+	BTNode* nodeC = temp->left;
+	rotateLeft(nodeC);
+	temp->left = nodeC;
+	node = nodeC;
+	rotateRight(node);
 }
 
-BTNode* BST::rotateRightLeft(BTNode* node)
+void BST::rotateRightLeft(BTNode* &node)
 {
-	BTNode* nodeC = node->right;
-	node->right = rotateRight(nodeC);
-	return rotateLeft(node);
+	BTNode* temp = node;
+	BTNode* nodeC = temp->right;
+	rotateRight(nodeC);
+	temp->right = nodeC;
+	node = nodeC;
+	rotateLeft(node);
 }
 
 int BST::countNode(BTNode* node)
@@ -363,66 +370,75 @@ void BST::deleteValue(ItemType item)
 
 bool BST::deleteValue(BTNode* &node, ItemType item)
 {
-	BTNode* deleteNode = node;
+	bool isDelete = false; // bool to check if node exists in the tree
 	if (node->item == item) // check to see if it's a root
 	{
-			if (node->left == nullptr && node->right == nullptr)
-			{
-				delete node;
-			}
-
-			else if (node->left != nullptr && node->right == nullptr)
-			{
-				node = node->left;
-				delete deleteNode;
-				node = avlRotate(node);
-			}
-
-			else if (node->left == nullptr && node->right != nullptr)
-			{
-				node = node->right;
-				delete deleteNode;
-				node = avlRotate(node);
-			}
-
-			else
-			{
-				BTNode* successorNode = deleteNode->left;
-				while (successorNode->right != nullptr)
-				{
-					successorNode = successorNode->right;
-				}
-				int valueSuccessor = successorNode->item;
-				deleteValue(deleteNode, valueSuccessor);
-				deleteNode->item = valueSuccessor;
-				node = avlRotate(node);
-			}
-	}
-	else 
-	{
-		if (node->item > item)
+		BTNode* deleteNode = node;
+		if (node->left == nullptr && node->right == nullptr)
 		{
-			if (node->left->item == item)
+			delete node;
+			node = nullptr;
+			isDelete = true;
+		}
+
+		else if (node->left != nullptr && node->right == nullptr)
+		{
+			node = node->left;
+			delete deleteNode;
+			avlRotate(node);
+			isDelete = true;
+		}
+
+		else if (node->left == nullptr && node->right != nullptr)
+		{
+			node = node->right;
+			delete deleteNode;
+			avlRotate(node);
+			isDelete = true;
+		}
+
+		else
+		{
+			BTNode* successorNode = deleteNode->left;
+			while (successorNode->right != nullptr)
+			{
+				successorNode = successorNode->right;
+			}
+			int valueSuccessor = successorNode->item;
+			isDelete = deleteValue(node, valueSuccessor);
+			deleteNode->item = valueSuccessor;
+			avlRotate(node);
+		}
+	}
+	else // node to delete is not a root
+	{
+		BTNode* deleteNode = node;
+		if (node->item > item) // check to see if target is to the left
+		{
+			if (node->left->item == item) // if node->left is the targer
 			{
 				deleteNode = node->left;
 				if (deleteNode->left == nullptr && deleteNode->right == nullptr)
 				{
 					node->left = nullptr;
 					delete deleteNode;
+					isDelete = true;
 				}
 
 				else if (deleteNode->left != nullptr && deleteNode->right == nullptr)
 				{
 					node->left = node->left->left;
 					delete deleteNode;
-					node->left = avlRotate(node->left);
+					avlRotate(node->left);
+					isDelete = true;
 				}
 
 				else if (deleteNode->left == nullptr && deleteNode->right != nullptr)
 				{
 					node->left = node->left->right;
 					delete deleteNode;
-					node->left = avlRotate(node->left);
+					avlRotate(node->left);
+					isDelete = true;
 				}
 
 				else
@@ -433,42 +449,46 @@ bool BST::deleteValue(BTNode* &node, ItemType item)
 						successorNode = successorNode->right;
 					}
 					int valueSuccessor = successorNode->item;
-					deleteValue(deleteNode, valueSuccessor);
+					isDelete = deleteValue(deleteNode, valueSuccessor);
 					deleteNode->item = valueSuccessor;
-					node->left = avlRotate(node->left);
+					avlRotate(node->left);
 				}
-				
+
 			}
 
-			else
+			else // recursive to the left
 			{
-				deleteValue(node->left, item);
+				isDelete = deleteValue(node->left, item);
 			}
 		}
 
-		else
+		else // node is to the right
 		{
-			if (node->right->item == item)
+			BTNode* deleteNode = node;
+			if (node->right->item == item) // if node->right is the target
 			{
 				deleteNode = node->right;
 				if (deleteNode->left == nullptr && deleteNode->right == nullptr)
 				{
 					node->right = nullptr;
 					delete deleteNode;
+					isDelete = true;
 				}
 
 				else if (deleteNode->left != nullptr && deleteNode->right == nullptr)
 				{
 					node->right = node->right->left;
 					delete deleteNode;
-					node->right = avlRotate(node->right);
+					avlRotate(node->right);
+					isDelete = true;
 				}
 
 				else if (deleteNode->left == nullptr && deleteNode->right != nullptr)
 				{
 					node->right = node->right->right;
 					delete deleteNode;
-					node->right = avlRotate(node->right);
+					avlRotate(node->right);
+					isDelete = true;
 				}
 
 				else
@@ -479,21 +499,24 @@ bool BST::deleteValue(BTNode* &node, ItemType item)
 						successorNode = successorNode->right;
 					}
 					int valueSuccessor = successorNode->item;
-					deleteValue(deleteNode, valueSuccessor);
+					isDelete = deleteValue(deleteNode, valueSuccessor);
 					deleteNode->item = valueSuccessor;
-					node->right = avlRotate(node->right);
+					avlRotate(node->right);
+					
 				}
-				
 			}
 
-			else
+			else // recursive to the right
 			{
-				deleteValue(node->right, item);
+				isDelete = deleteValue(node->right, item);
 			}
 		}
 	}
-	node = avlRotate(node);
-	return true;
+	if (isDelete)
+	{
+		avlRotate(node);
+		return true;
+	}
 }
 
 void BST::displayAsc() 
