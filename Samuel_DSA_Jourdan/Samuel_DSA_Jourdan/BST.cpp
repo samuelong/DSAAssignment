@@ -41,19 +41,19 @@ void BST::search(ItemType item)
 
 string BST::search(BTNode* node, ItemType item)
 {
-	if (node == root)
-	{
-		if (root->item == item)
-		{
-			return "Root";
-		}
-	}
 	if (root == nullptr)
 	{
 		return "Tree is Empty";
 	}
 	else if (node != nullptr)
 	{
+		if (node == root)
+		{
+			if (root->item == item)
+			{
+				return "Root";
+			}
+		}
 		string str = "";
 		if (node->item == item)
 		{
@@ -92,7 +92,10 @@ string BST::search(BTNode* node, ItemType item)
 
 void BST::insert(ItemType item)
 {
-	avlAdd(root, item);
+	if (avlAdd(root, item) == nullptr)
+	{
+		cout << "Unable to add value as it already exists\n";
+	}
 }
 
 BTNode* BST::avlAdd(BTNode* &node, ItemType item)

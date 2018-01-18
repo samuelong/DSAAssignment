@@ -38,6 +38,7 @@ int main()
 	int choice = -1;
 	while (choice != 0)
 	{
+		std::cout << std::endl;
 		std::cout << "1: Search for a value\n";
 		std::cout << "2: Add a value\n";
 		std::cout << "3: Remove a value\n";
