@@ -507,7 +507,7 @@ bool BST::deleteValue(BTNode* &node, ItemType item)
 		return true;
 	}
 
-	else 
+	else  // if the value isn't found
 	{
 		std::cout << "Value is not found" << endl;
 	}
@@ -525,13 +525,13 @@ void BST::displayAsc()
 	}
 }
 
-void BST::displayAsc(BTNode* node) 
+void BST::displayAsc(BTNode* node) // from smallest to biggest (ascending order)
 {
 	if (node != nullptr) 
 	{
-		displayAsc(node->left);
+		displayAsc(node->left); // recursive to the left
 		cout << node->item << endl;
-		displayAsc(node->right);
+		displayAsc(node->right); // recursive to the right
 	}
 }
 
@@ -539,7 +539,7 @@ void BST::displayKNode(int kNode)
 {
 	Queue* testQueue = new Queue();
 	Queue* finalQueue = new Queue();
-	int count = 0;
+	int count = 0; // used to check the max amount of nodes in a queue (so if node isn't found, won't crash)
 
 	if (root == nullptr)
 	{
@@ -547,42 +547,42 @@ void BST::displayKNode(int kNode)
 	}
 	else
 	{
-		testQueue->enqueue(root);
+		testQueue->enqueue(root); // starts by adding node
 		while (testQueue->isEmpty() == false)
 		{
 			BTNode* node = nullptr;
-			testQueue->dequeue(node);
-			finalQueue->enqueue(node);
-			count++;
+			testQueue->dequeue(node); // dequeue the node and store it
+			finalQueue->enqueue(node); // enqueue the node into anothe queue (this queue saves every node)
+			count++; // adds one to count after every enqueue in finalQueue
 
-			//Enqueue left child
-			if (node->left != nullptr)
+			// enqueue left child
+			if (node->left != nullptr) // dequeued node's left
 			{
 				testQueue->enqueue(node->left);
 			}
 
-			//Enqueue right child
-			if (node->right != nullptr)
+			// enqueue right child
+			if (node->right != nullptr) // dequeued node's right
 			{
 				testQueue->enqueue(node->right);
 			}
 		}
 
 		BTNode* value = nullptr;
-		if (kNode > count) 
+		if (kNode > count) // check to see if the node index exist
 		{
 			std::cout << "The node doesn't exist" << endl;
 		}
 
-		else 
+		else  // if it does, check it in the finalQueue (which has every node) --> not testQueue
 		{
 			for (int i = 0; i <= kNode - 1; i++)
 			{
-				finalQueue->dequeue(value);
+				finalQueue->dequeue(value); // dequeue till the indexed node
 			}
-			cout << "The value is: " << value->item << endl;
+			cout << "The value is: " << value->item << endl; // print out the value 
 		}
 	}
-	delete finalQueue;
+	delete finalQueue; // delete the queues and re-create them
 	delete testQueue;
 }
