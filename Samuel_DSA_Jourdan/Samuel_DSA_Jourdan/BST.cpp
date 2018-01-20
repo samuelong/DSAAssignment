@@ -13,7 +13,7 @@ BST::BST()
 
 BST::~BST()
 {
-	//DELETE ALL NODES
+	
 }
 
 void BST::populateAVLBT(int sum)
@@ -46,12 +46,14 @@ void BST::search(ItemType item)
 
 string BST::search(BTNode* node, ItemType item)
 {
+	// Check for Empty
 	if (root == nullptr)
 	{
 		return "Tree is Empty";
 	}
 	else if (node != nullptr)
 	{
+		// Check for Root Item
 		if (node == root)
 		{
 			if (root->item == item)
@@ -60,10 +62,12 @@ string BST::search(BTNode* node, ItemType item)
 			}
 		}
 		string str = "";
+		// Found. Adds "<- Path to Value" at the End of the string
 		if (node->item == item)
 		{
 			return "<- Path to Value";
 		}
+		//Adds string onto Left / Right Route.
 		else if (node->item < item)
 		{
 			str = search(node->right, item);
@@ -80,6 +84,7 @@ string BST::search(BTNode* node, ItemType item)
 				str = "L|" + str;
 			}
 		}
+		// Not Found
 		if (str == "")
 		{
 			return "";
@@ -105,10 +110,12 @@ void BST::insert(ItemType item)
 
 BTNode* BST::avlAdd(BTNode* &node, ItemType item)
 {
+	//Creates a Node when Leaf is Empty
 	if (node == nullptr)
 	{
 		node = new BTNode();
 		node->item = item;
+		//Checks for Root
 		if (root == nullptr)
 		{
 			root = node;
@@ -117,6 +124,7 @@ BTNode* BST::avlAdd(BTNode* &node, ItemType item)
 	}
 	else
 	{
+		//Compare Values. Calls this method to traverse Left / Right
 		BTNode* temp;
 		if (item < node->item)
 		{
@@ -124,6 +132,7 @@ BTNode* BST::avlAdd(BTNode* &node, ItemType item)
 			avlRotate(node);
 			return temp;
 		}
+		//Ensures Unique value in tree.
 		else if (item == node->item)
 		{
 			return nullptr;
@@ -248,7 +257,7 @@ Queue* BST::getLevelByLevel(BTNode* node)
 			// Number of nodes in a height
 			for (int n = 0; n < pow(2, h); n++)
 			{
-				// Node is nullptr, resulting in left and right child to be null;
+				// Node is nullptr. Adds Empty Child Nodes to Queue.
 				if (ptr->item == NULL)
 				{
 					tempQ->enqueue(new BTNode());
@@ -256,6 +265,7 @@ Queue* BST::getLevelByLevel(BTNode* node)
 				}
 				else
 				{
+					// Adds Empty Child Node if Child is Empty.
 					if (ptr->left != nullptr)
 					{
 						tempQ->enqueue(ptr->left);
@@ -273,10 +283,12 @@ Queue* BST::getLevelByLevel(BTNode* node)
 						tempQ->enqueue(new BTNode());
 					}
 				}
+				//Creates the Main Queue
 				tempQ->dequeue(ptr);
 				q->enqueue(ptr);
 			}
 		}
+		//Clears memory. Returns Main Queue.
 		delete tempQ;
 		return q;
 	}
@@ -303,10 +315,12 @@ void BST::displayBT(BTNode* node)
 		int h = getHeight(node);
 		double space = pow(2, h-1);
 
-		//Top level
+		//Displays Root Level
+		//Display Spaces Required at start
 		displaySpaces(((space / 2) - 0.5)*2);
 		BTNode* temp = nullptr;
 		q->getFront(temp);
+		//Displays the Leaf. Empty results in ***
 		if (temp->item != NULL)
 		{
 			std::cout << std::setw(3) << std::setfill('*') << left << temp->item;
@@ -324,7 +338,7 @@ void BST::displayBT(BTNode* node)
 		for (int i = h-2; i >= 0; i--)
 		{
 			space = pow(2, i);
-			//Left Spaces
+			//Display Spaces Required at start
 			displaySpaces(((space / 2) - 0.5)*2);
 
 			//Number of Nodes per Level
@@ -332,6 +346,7 @@ void BST::displayBT(BTNode* node)
 			{
 				//Item in Node
 				q->getFront(temp);
+				//Displays the Leaf. Empty results in ***
 				if (temp->item != NULL)
 				{
 					std::cout << std::setw(3) << std::setfill('*') << left << temp->item;
@@ -353,6 +368,7 @@ void BST::displayBT(BTNode* node)
 
 void BST::displaySpaces(int no)
 {
+	//For each integer no, 3 spaces will be added.
 	for (int i = 0; i < no; i++)
 	{
 		std::cout << std::setw(3) << std::setfill(' ') << left << " ";
