@@ -10,7 +10,7 @@ Proper Validation that "works"
 
 #include "stdafx.h"
 #include <iostream>
-#include "BST.h"
+#include "BST.h"	
 #include "Queue.h"
 
 

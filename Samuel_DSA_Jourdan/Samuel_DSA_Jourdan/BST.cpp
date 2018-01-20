@@ -213,7 +213,6 @@ void BST::rotateLeftRight(BTNode* &node)
 	BTNode* nodeC = temp->left;
 	rotateLeft(nodeC);
 	temp->left = nodeC;
-	node = nodeC;
 	rotateRight(node);
 }
 
@@ -223,7 +222,6 @@ void BST::rotateRightLeft(BTNode* &node)
 	BTNode* nodeC = temp->right;
 	rotateRight(nodeC);
 	temp->right = nodeC;
-	node = nodeC;
 	rotateLeft(node);
 }
 
