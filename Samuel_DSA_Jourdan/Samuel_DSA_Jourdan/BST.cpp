@@ -1,3 +1,7 @@
+/* Group NoIdea
+Samuel Ong S10171663K
+Jourdan Lim S10166869D
+*/
 #include "stdafx.h"
 #include "BST.h"
 #include <iostream>
@@ -17,6 +21,7 @@ void BST::populateAVLBT(int sum)
 	int total = 0, current = 1;
 	while (true)
 	{
+		// Compare Total with Sum to stop
 		if (total >= sum)
 		{
 			break;
@@ -370,153 +375,87 @@ void BST::deleteValue(ItemType item)
 
 bool BST::deleteValue(BTNode* &node, ItemType item)
 {
-	bool isDelete = false; // bool to check if node exists in the tree
-	if (node->item == item) // check to see if it's a root
+	// search for the node to be deleted
+	BTNode* current = node;
+	BTNode* parent = NULL;
+	bool isLeftChild = false;
+	bool found = false;
+	while ((!found) && (current != NULL))
 	{
-		BTNode* deleteNode = node;
-		if (node->left == nullptr && node->right == nullptr)
+		if (item == current->item)
 		{
-			delete node;
-			node = nullptr;
-			isDelete = true;
+			found = true;
 		}
-
-		else if (node->left != nullptr && node->right == nullptr)
-		{
-			node = node->left;
-			delete deleteNode;
-			avlRotate(node);
-			isDelete = true;
-		}
-
-		else if (node->left == nullptr && node->right != nullptr)
-		{
-			node = node->right;
-			delete deleteNode;
-			avlRotate(node);
-			isDelete = true;
-		}
-
 		else
 		{
-			BTNode* successorNode = deleteNode->left;
-			while (successorNode->right != nullptr)
+			parent = current;
+			if (item < current->item)
 			{
-				successorNode = successorNode->right;
+				current = current->left; // go to left subtree
+				isLeftChild = true;
 			}
-			int valueSuccessor = successorNode->item;
-			isDelete = deleteValue(node, valueSuccessor);
-			deleteNode->item = valueSuccessor;
-			avlRotate(node);
+			else
+			{
+				current = current->right; // go to right subtree
+				isLeftChild = false;
+			}
 		}
 	}
-	else // node to delete is not a root
+	// node found
+	if (found)
 	{
-		BTNode* deleteNode = node;
-		if (node->item > item) // check to see if target is to the left
+		// node is a leaf
+		if (current->left == NULL && current->right == NULL)
 		{
-			if (node->left->item == item) // if node->left is the targer
-			{
-				deleteNode = node->left;
-				if (deleteNode->left == nullptr && deleteNode->right == nullptr)
-				{
-					node->left = nullptr;
-					delete deleteNode;
-					isDelete = true;
-				}
-
-				else if (deleteNode->left != nullptr && deleteNode->right == nullptr)
-				{
-					node->left = node->left->left;
-					delete deleteNode;
-					avlRotate(node->left);
-					isDelete = true;
-				}
-
-				else if (deleteNode->left == nullptr && deleteNode->right != nullptr)
-				{
-					node->left = node->left->right;
-					delete deleteNode;
-					avlRotate(node->left);
-					isDelete = true;
-				}
-
+			if (current == node) // node to be deleted is a root
+				node = NULL;
+			else
+				if (isLeftChild)
+					parent->left = NULL;
 				else
-				{
-					BTNode* successorNode = deleteNode->left;
-					while (successorNode->right != nullptr)
-					{
-						successorNode = successorNode->right;
-					}
-					int valueSuccessor = successorNode->item;
-					isDelete = deleteValue(deleteNode, valueSuccessor);
-					deleteNode->item = valueSuccessor;
-					avlRotate(node->left);
-				}
-
-			}
-
-			else // recursive to the left
-			{
-				isDelete = deleteValue(node->left, item);
-			}
+					parent->right = NULL;
 		}
-
-		else // node is to the right
+		// node has 1 children
+		else if (current->left == NULL)
 		{
-			BTNode* deleteNode = node;
-			if (node->right->item == item) // if node->right is the target
-			{
-				deleteNode = node->right;
-				if (deleteNode->left == nullptr && deleteNode->right == nullptr)
-				{
-					node->right = nullptr;
-					delete deleteNode;
-					isDelete = true;
-				}
-
-				else if (deleteNode->left != nullptr && deleteNode->right == nullptr)
-				{
-					node->right = node->right->left;
-					delete deleteNode;
-					avlRotate(node->right);
-					isDelete = true;
-				}
-
-				else if (deleteNode->left == nullptr && deleteNode->right != nullptr)
-				{
-					node->right = node->right->right;
-					delete deleteNode;
-					avlRotate(node->right);
-					isDelete = true;
-				}
-
-				else
-				{
-					BTNode* successorNode = deleteNode->left;
-					while (successorNode->right != nullptr)
-					{
-						successorNode = successorNode->right;
-					}
-					int valueSuccessor = successorNode->item;
-					isDelete = deleteValue(deleteNode, valueSuccessor);
-					deleteNode->item = valueSuccessor;
-					avlRotate(node->right);
-					
-				}
-			}
-
-			else // recursive to the right
-			{
-				isDelete = deleteValue(node->right, item);
-			}
+			if (current == root)
+				node = node->right;
+			else if (isLeftChild)
+				parent->left = current->right;
+			else
+				parent->right = current->right;;
 		}
+		else if (current->right == NULL)
+		{
+			if (current == root)
+				node = node->left;
+			else if (isLeftChild)
+				parent->left = current->left;
+			else
+				parent->right = current->left;;
+		}
+		// node has 2 children
+		else
+		{
+			// find the successor
+			BTNode* successor = current->left;
+			while (successor->right != NULL)
+				successor = successor->right;
+			// replace the node’s item with that of the successor
+			int n = successor->item;
+			// delete the successor (either case 1 or case 2)
+			deleteValue(node, item);
+			// replace the node’s item with that of the successor
+			current->item = n;
+		}
+		// balance the tree
+		cout << node->item << endl;
+		balance(parent);
+		balance(node);
+		balance(node->left);
+		balance(node->right);
 	}
-	if (isDelete)
-	{
-		avlRotate(node);
-		return true;
-	}
+	return true;
 }
 
 void BST::displayAsc() 

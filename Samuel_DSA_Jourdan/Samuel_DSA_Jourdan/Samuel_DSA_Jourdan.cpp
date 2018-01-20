@@ -1,5 +1,11 @@
-// Samuel_DSA_Jourdan.cpp : Defines the entry point for the console application.
-//
+/* Group NoIdea
+Samuel Ong S10171663K 
+Jourdan Lim S10166869D
+Avl rotation works.
+Proper Validation that "works"
+*Little to No Memory Leaks*
+*Does not crash*
+*/
 
 
 #include "stdafx.h"

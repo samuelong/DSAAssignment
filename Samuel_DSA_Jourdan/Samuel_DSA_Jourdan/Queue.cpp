@@ -1,3 +1,7 @@
+/* Group NoIdea
+Samuel Ong S10171663K
+Jourdan Lim S10166869D
+*/
 #include "stdafx.h"
 #include "Queue.h"
 
