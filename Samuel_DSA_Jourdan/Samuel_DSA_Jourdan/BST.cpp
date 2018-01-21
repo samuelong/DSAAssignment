@@ -200,19 +200,17 @@ void BST::avlRotate(BTNode* &node)
 
 void BST::rotateLeft(BTNode* &node)
 {
-	BTNode* temp = node;
-	BTNode* nodeC = temp->right;
-	temp->right = nodeC->left;
-	nodeC->left = temp;
+	BTNode* nodeC = node->right;
+	node->right = nodeC->left;
+	nodeC->left = node;
 	node = nodeC;
 }
 
 void BST::rotateRight(BTNode* &node)
 {
-	BTNode* temp = node;
-	BTNode* nodeC = temp->left;
-	temp->left = nodeC->right;
-	nodeC->right = temp;
+	BTNode* nodeC = node->left;
+	node->left = nodeC->right;
+	nodeC->right = node;
 	node = nodeC;
 }
 
@@ -377,6 +375,7 @@ void BST::displaySpaces(int no)
 
 void BST::deleteValue(ItemType item) 
 {
+
 	if (root != nullptr)
 	{
 		deleteValue(root, item);
@@ -463,7 +462,7 @@ bool BST::deleteValue(BTNode* &node, ItemType item)
 							successorNode = successorNode->right;
 						}
 						int valueSuccessor = successorNode->item;
-						deleteValue(deleteNode, valueSuccessor);
+						deleteValue(node->left, valueSuccessor);
 						deleteNode->item = valueSuccessor;
 						avlRotate(node->left);
 					}
@@ -509,7 +508,7 @@ bool BST::deleteValue(BTNode* &node, ItemType item)
 							successorNode = successorNode->right;
 						}
 						int valueSuccessor = successorNode->item;
-						deleteValue(deleteNode, valueSuccessor);
+						deleteValue(node->right, valueSuccessor);
 						deleteNode->item = valueSuccessor;
 						avlRotate(node->right);
 
